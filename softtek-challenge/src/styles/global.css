@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+
+  --gray-font-900: #464C53;
+  --gray-font-700: #677484;
+  --gray-font-200: #A7B0BA;
+
+  --gray-font-logo: #545960;
+
+  --purple-font-500: #5F6F9D;
+
+  --gray-500: #6978A3;
+  --gray-200: #E1E9FF;
+  --gray-100: #C0C7DF;
+  --gray-50: #E9EDFB;
+  --light-gray: #EFF2F8;
+
+  --purple-gradient: #6F6CF6;
+  --pink-gradient: #A257F7;
+
+  --light-green: #D2FFD7;
+  --green: #53C85F;
+  --white: #fff;
+
+  --status-blue: #A3DBED;
+  --status-yellow: #EDEAA3;
+  --status-red: #EDA3A3;
+  --status-green: #A4EDA3;
+
+  background-color: var(--light-gray);
+  width: 100%;
+  height: 100%;
+  
+  font-family: "Inter", sans-serif;
+}
+
+.divisor {
+  background-color: var(--gray-font-200);
+  height: 1px;
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.status-blue {
+  background-color: var(--status-blue);
+}
+.status-yellow {
+  background-color: var(--status-yellow);
+}
+.status-red {
+  background-color: var(--status-red);
+}
+.status-green {
+  background-color: var(--status-green);
+}
