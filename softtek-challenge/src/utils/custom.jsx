@@ -1,6 +1,6 @@
 import { PieChart } from "../component/PieChart";
 import { ABERTO, EM_ANDAMENTO, EM_ESPERA, ENCERRADO } from "./actions";
-// import star from '../../assets/images/star.svg';
+import star from '../assets/images/star.svg';
 
 const data = [70, 30];
 const labels = ['Encerrados', 'Abertos',];
@@ -31,16 +31,16 @@ export const table = [
     percent: "12%",
     content: <PieChart data={data} labels={labels} />
   },
-  // {
-  //   title: "AVALIAÇÃO",
-  //   subtitle: "3 meses",
-  //   percent: "",
-  //   content:
-  //     <div className='recommendation'>
-  //       <h1>4.5</h1>
-  //       <img src={star} alt="Avaliação" />
-  //     </div>
-  // },
+  {
+    title: "AVALIAÇÃO",
+    subtitle: "3 meses",
+    percent: "",
+    content:
+      <div className='recommendation'>
+        <h1>4.5</h1>
+        <img src={star} alt="Avaliação" />
+      </div>
+  },
 ];
 
 export     const callList = [
