@@ -18,3 +18,7 @@ main {
 .interactions-history img {
   width: 10rem;
 }
+
+.close-call--btn {
+  font-family: "M PLUS 2", sans-serif;
+}

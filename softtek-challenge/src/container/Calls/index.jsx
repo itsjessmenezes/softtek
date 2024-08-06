@@ -1,29 +1,32 @@
+/* eslint-disable react/prop-types */
 import './style.css';
 
 import { LabelComponent } from '../../component/LabelComponent';
 import { KeyValueComponent } from '../../component/KeyValueComponent';
+import callList from '../../utils/callList.json';
 
 import location from '../../assets/images/location.svg';
 import contact from '../../assets/images/contact.svg';
 import notFound from '../../assets/images/not-found.svg';
 
-export const Calls = () => {
+export const Calls = ({ protocol }) => {
+  const findProtocol = callList.find(p => p.protocol.id === protocol);
 
-    return (
+    return findProtocol ? (
       <section className='margin top-20'>
         <section className="d-flex column gap-10">
         <section className="background--white border radius-5 ">
           <LabelComponent 
-          title="N° Chamado: 123456789"
+          title={`N° Chamado: ${findProtocol.protocol.id}`}
           keyValue={
             <>
                       <KeyValueComponent 
             label="Prioridade:"
-            value="Alta"
+            value={findProtocol.priority}
           />
                     <KeyValueComponent 
             label="Tipo de Chamado:"
-            value="Problema"
+            value={findProtocol.call_type.title}
           />
             </>
         }
@@ -32,24 +35,30 @@ export const Calls = () => {
         </section>
         <section className="background--white border radius-5">
           <LabelComponent 
-          title="Health Clínica Médica"
+          title={findProtocol.client.company_name}
           keyValue={
-            <KeyValueComponent
-            label="CNPJ:"
-            value="34294934/0001-48"
+            <>
+              <KeyValueComponent
+            label="Nome do Cliente:"
+            value={findProtocol.client.name}
             />
+              <KeyValueComponent
+            label={`${findProtocol.client.document_type}:`}
+            value={findProtocol.client.document_number}
+            />
+            </>
           }
           content={
             <div className='d-flex column'>
               <KeyValueComponent
               icon={location}
               label="Endereço:"
-              value="Av Paulista, 2309 - SP"
+              value={`${findProtocol.client.address.street}, ${findProtocol.client.address.street_number} - ${findProtocol.client.address.state_code}`}
               />
               <KeyValueComponent
               icon={contact}
               label="Contato:"
-              value="(11) 9 9343-3409"
+              value={findProtocol.client.phone}
               />
             </div>
           }
@@ -62,12 +71,12 @@ export const Calls = () => {
                 keyValue={
                   <>
                     <KeyValueComponent
-                    label="Acesso remoto e Presencial:"
+                    label="Acesso remoto e Presencial"
                     value=""
                     />
                     <KeyValueComponent
                     label="Renovação de contrato:"
-                    value="31/12/2024"
+                    value={new Date(findProtocol.contract.renewal_contract).toLocaleString("pt-BR", { year: 'numeric', month: 'numeric', day: 'numeric' })}
                     />
                   </>
                 }
@@ -75,7 +84,10 @@ export const Calls = () => {
                   <>
                     <KeyValueComponent
                       label="Valor:"
-                      value="R$5.000,00"
+                      value={(findProtocol.contract.price).toLocaleString('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL'
+                      })}
                     />
                     <KeyValueComponent
                       label="Tipo de contrato:"
@@ -96,5 +108,7 @@ export const Calls = () => {
           </section>
         </section>
       </section>
+    ) : (
+      <div>Erro</div>
     );
 }

@@ -26,6 +26,7 @@ $colors: (
   gray-font-logo: #545960,
 
   purple-font-500: #5F6F9D,
+  purple-font-700: #3635a2,
 
   gray-500: #6978A3,
   gray-200: #E1E9FF,
@@ -39,6 +40,7 @@ $colors: (
   light-green: #D2FFD7,
   green: #53C85F,
   white: #fff,
+  none: none,
 );
 
 $font: (
@@ -93,6 +95,10 @@ $font: (
   width: 98%;
   margin: 0 auto;
   margin-bottom: 20px;
+}
+
+.bg-none {
+  background: none;
 }
 
 .status-gray {

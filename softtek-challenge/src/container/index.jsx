@@ -8,6 +8,7 @@ import { Calls } from './Calls';
 
 export const App = () => {
 const [page, setPage] = useState(0);
+const [protocol, setProtocol] = useState();
 
     return (
         <section className='home-container'>
@@ -15,7 +16,7 @@ const [page, setPage] = useState(0);
         <main>
         <Header />
         <ChartCards />
-        { page === 0 ? <Home /> : <Calls /> }
+        { page === 0 ? <Home protocol={protocol} setProtocol={setProtocol} setPage={setPage} page={page} /> : <Calls protocol={protocol} /> }
         </main>
       </section>
     )

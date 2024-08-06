@@ -14,3 +14,63 @@ main {
   height: .5rem;
   border-radius: 50%;
 }
+
+/* .table-container {
+  background-color: var(--white);
+  padding: 20px 30px;
+  margin-top: 20px;
+  border-radius: 15px;
+}
+
+.table-container tr > th {
+  color: var(--gray-font-200);
+  font-weight: 600;
+  text-align: left;
+}
+
+.table-container tr > th {
+  border-bottom: 1px solid var(--gray-50);
+  padding-bottom: 20px;
+} */
+
+
+.table-body > td {
+  width: 20rem;
+  border-bottom: 1px solid var(--gray-50);
+}
+
+.table-body > td:last-child {
+  padding-bottom: 10px;
+}
+
+.table-body > td h4 {
+  font-family: "M PLUS 2", sans-serif;
+  font-size: 0.8rem;
+}
+
+.table-body > td > span {
+  color: var(--gray-font-200);
+  font-size: .8em
+}
+
+.table-body .status-container {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  height: 4rem;
+}
+
+.table-body .status-container > h4 {
+  color: var(--gray-font-700);
+}
+
+.table-body > td > .priority {
+    padding: 5px 30px;
+    border-radius: 2rem;
+    width: fit-content;
+    border: 2px solid var(--gray-100);
+
+    color: var(--gray-500);
+    font-size: .8em;
+    font-weight: bold;
+}

@@ -1,0 +1,9 @@
+[
+    {"id": "protocol", "text": "Protocolo"},
+    {"id": "client", "text": "Cliente"},
+    {"id": "createDate", "text": "Data de Abertura"},
+    {"id": "status", "text": "Status"},
+    {"id": "callType", "text": "Tipo de Chamado"},
+    {"id": "priority", "text": "Prioridade"},
+    {"id": "description", "text": "Descrição"}
+  ]
