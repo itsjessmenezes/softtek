@@ -1,4 +1,4 @@
-.table-container {
+/* .table-container {
   background-color: var(--white);
   padding: 20px 30px;
   margin-top: 20px;
@@ -14,7 +14,7 @@
 .table-container tr > th {
   border-bottom: 1px solid var(--gray-50);
   padding-bottom: 20px;
-}
+} */
 
 
 .table-body > td {
@@ -26,15 +26,15 @@
   padding-bottom: 10px;
 }
 
-.table-body > td > h3 {
-  color: var(--gray-font-900);
-  font-size: 16px;
+/* .table-body > td > h4 {
+  color: var(--gray-font-700);
+  font-size: 0.875 !important;
   font-weight: bold;
-}
+} */
 
 .table-body > td > span {
   color: var(--gray-font-200);
-  font-size: 12px
+  font-size: .7em
 }
 
 .table-body .status-container {
@@ -44,18 +44,17 @@
   height: 4rem;
 }
 
-.table-body .status-container > h3 {
-  color: var(--gray-font-900);
+.table-body .status-container > h4 {
+  color: var(--gray-font-700);
 }
 
 .table-body > td > .priority {
-  background: var(--gray-50);
-    display: flex;
-    padding: 7px 20px;
+    padding: 5px 30px;
     border-radius: 2rem;
     width: fit-content;
     border: 2px solid var(--gray-100);
 
     color: var(--gray-500);
+    font-size: .8em;
     font-weight: bold;
 }

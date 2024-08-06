@@ -28,12 +28,12 @@ header {
     outline-color: var(--purple-font-500);
   }
   
-  header .user-container {
+  /* header .user-container {
     display: flex;
     margin-right: 30px;
     align-items: center;
     gap: 20px;
-  }
+  } */
   
   header .user-container img {
     width: 25px;
