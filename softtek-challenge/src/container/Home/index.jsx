@@ -1,17 +1,47 @@
 /* eslint-disable react/prop-types */
 import './style.css';
 import { color } from '../../utils/custom';
-import callList from '../../utils/callList.json';
 import tableHead from './tableHead.json';
+import newCalls from '../../utils/newCalls.json';
+import { useEffect } from 'react';
+import { sortedCallList } from '../../utils/functions';
 
-export const Home = ({ setProtocol, setPage }) => {
-
+export const Home = ({ setProtocol, setPage, callList, setCallList }) => {
     const handleClickProtocol = (item) => {
         if(item.status === 'Encerrado') return;
 
         setPage(1);
         setProtocol(item.protocol.id);
     }
+
+    useEffect(() => {
+      let index = 0;
+      let timeout;
+
+      const addNewCalls = () => {
+        if(index < newCalls.length) {
+          setCallList(prev => {
+            const itemToAdd = newCalls[index];
+            if (!itemToAdd) {
+              return prev;
+            }
+
+            const updatedList = [...prev, newCalls[index]];
+            const uniqueList = updatedList.filter((item, pos, self) => 
+              self.findIndex(t => t?.protocol?.id === item?.protocol?.id) === pos
+            );
+            const sortedList = sortedCallList(uniqueList);
+            return sortedList;
+          });
+          index++;
+          timeout = setTimeout(addNewCalls, 3000);
+        }
+      }
+  
+      addNewCalls();
+      return () => clearTimeout(timeout);
+    }, [])
+    
       return (
       <section className="background--white padding-20-30 margin top-20 border radius-10">
       <table>

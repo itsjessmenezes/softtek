@@ -39,7 +39,7 @@ export const NavBar = ({ page, setPage }) => {
       <nav className='background--white'>
         <div className='d-flex column align-center gap-10'>
           <h2 className='logo'>FIAP Engineers</h2>
-          <div className='divisor background--gray-font-200'></div>
+          <div className='divisor background--gray-font-200 margin bottom-20'></div>
           <ul className='d-flex column gap-10'>
             {navOptions.map(({ title, img, imgSelected }) => (
               <li
@@ -56,7 +56,7 @@ export const NavBar = ({ page, setPage }) => {
         </div>
 
         <div className="footer">
-          <div className="divisor background--gray-font-200"></div>
+          <div className="divisor background--gray-font-200 margin bottom-20"></div>
 
           <ul>
             {navFooterOptions.map(({ title, img }) => (
