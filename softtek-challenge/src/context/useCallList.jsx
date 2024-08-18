@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-// CallListContext.js
 import { createContext, useState, useContext } from 'react';
 import { sortedCallList } from '../utils/functions';
 const CallListContext = createContext();

@@ -20,11 +20,18 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 const callList = list;
+let messageList = [];
 
 app.get('/api/call-list', (req, res) => {
     res.json(callList);
 });
-// Endpoint para adicionar novos itens em callList
+
+
+app.get('/api/messages-list', async (req, res) => {
+    console.log({messageList});
+    res.json(messageList);
+});
+
 app.post('/api/call-list', (req, res) => {
     const data = req.body;
 
@@ -39,15 +46,12 @@ app.post('/api/call-list', (req, res) => {
 app.post('/api/chat', async (req, res) => {
     const { messages } = req.body;
 
-    console.log({messages, reqBody: JSON.stringify(req.body)})
     try {
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
             model: 'gpt-4o',
-            // model: 'gpt-3.5-turbo',
             messages: [
                 {
                     "role":"system",
-                    // "content": process.env.CHATBOT_SCRIPT,
                     "content": process.env.EXPORTED_CONTENT,
                     },
                     ...messages.map(msg => ({
@@ -64,7 +68,9 @@ app.post('/api/chat', async (req, res) => {
 
         
         const messageContent = response.data.choices[0].message.content;
-        // console.log({userMessage, messageContent: response.data})
+        // messageList = messages;
+        messageList = messageContent;
+    
         res.json({ message: messageContent });
 
     } catch (error) {

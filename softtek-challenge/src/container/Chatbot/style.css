@@ -23,8 +23,7 @@
     color: #333;
     margin-bottom: 20px;
   }
-  
-  /* Estilos do Formulário */
+
   .form {
     display: flex;
     flex-direction: column;
@@ -68,7 +67,6 @@
     outline: none;
   }
   
-  /* Estilos do Botão */
   .submit-btn {
     background-color: #007bff;
     color: #fff;

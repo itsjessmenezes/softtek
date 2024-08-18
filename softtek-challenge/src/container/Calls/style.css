@@ -85,15 +85,11 @@ main {
   border-radius: 5px;
 }
 
-.message.User {
+.message.user {
   align-self: flex-end;
 }
 
-.message.GPT {
-  align-self: flex-start;
-}
-
-.message.Atendente {
+.message.system {
   align-self: flex-start;
 }
 
