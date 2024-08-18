@@ -1,12 +1,18 @@
 /* eslint-disable react/prop-types */
 import './style.css';
 import { color } from '../../utils/custom';
+import axios from "axios";
 import tableHead from './tableHead.json';
 import newCalls from '../../utils/newCalls.json';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { sortedCallList } from '../../utils/functions';
+import { Loading } from '../../component/Loading';
+import { useCallList } from '../../context/useCallList';
 
-export const Home = ({ setProtocol, setPage, callList, setCallList }) => {
+export const Home = ({ setProtocol, setPage, }) => {
+  const { callList, setCallList, redirectCall, } = useCallList();
+  const [loading, setLoading] = useState(null);
+
     const handleClickProtocol = (item) => {
         if(item.status === 'Encerrado') return;
 
@@ -14,36 +20,100 @@ export const Home = ({ setProtocol, setPage, callList, setCallList }) => {
         setProtocol(item.protocol.id);
     }
 
-    useEffect(() => {
-      let index = 0;
-      let timeout;
 
-      const addNewCalls = () => {
-        if(index < newCalls.length) {
-          setCallList(prev => {
-            const itemToAdd = newCalls[index];
-            if (!itemToAdd) {
-              return prev;
-            }
+    console.log({newCalls, redirectCall})
+    
 
-            const updatedList = [...prev, newCalls[index]];
+  const fetchCallList = async () => {
+      try {
+          const response = await axios.get("http://localhost:5000/api/call-list");
+          console.log({response})
+
+          if(response.data.length === callList.length) return;
+
+          response.data.map(item =>     setCallList(prev => {
+            const updatedList = [...prev, item];
             const uniqueList = updatedList.filter((item, pos, self) => 
               self.findIndex(t => t?.protocol?.id === item?.protocol?.id) === pos
             );
             const sortedList = sortedCallList(uniqueList);
             return sortedList;
-          });
-          index++;
-          timeout = setTimeout(addNewCalls, 3000);
-        }
+          }))
+          // addToCallList(response.data);
+      } catch (error) {
+          console.error("Error fetching callList:", error);
       }
+  };
+
+    useEffect(() => {
+      setLoading(true);
+      const interval = setInterval(() => {
+        fetchCallList();
+
+        setLoading(false)
+      }, 3000)
+      // let index = 0;
+      // let timeout;
+
+      // const addNewCalls = () => {
+      //   if(newCalls.length > 0) {
+      //     setCallList(prev => {
+      //       const itemToAdd = newCalls[index];
+      //       if (!itemToAdd) {
+      //         return prev;
+      //       }
+      //       setLoading(true);
+
+      //       const updatedList = [...prev, newCalls[index]];
+      //       const uniqueList = updatedList.filter((item, pos, self) => 
+      //         self.findIndex(t => t?.protocol?.id === item?.protocol?.id) === pos
+      //       );
+      //       const sortedList = sortedCallList(uniqueList);
+      //       return sortedList;
+      //     });
+      //     index++;
+      //     newCalls.unshift();
+      //     timeout = setTimeout(addNewCalls, 3000);
+      //   } else {
+      //     setLoading(false);
+      //     clearTimeout(timeout);
+      //   }
+      // }
   
-      addNewCalls();
-      return () => clearTimeout(timeout);
+      // addNewCalls();
+      return () => clearInterval(interval);
     }, [])
+
+    useEffect(() => {
+      if (loading !== null) {
+        const hideLoading = setTimeout(() => {
+          setLoading(null);
+        }, 500);
+
+        return () => clearTimeout(hideLoading);
+      }
+    }, [loading]);
+
+    // console.log('test', loading);
+    // const handleLoading = (index) => {
+    //   console.log('alo', index)
+    //   setLoading(index);
+    //   setTimeout(() => {
+    //     setLoading(null);
+    //   }, 500);
+    // };
+  
+    // useEffect(() => {
+    //   if (prevCallListRef.current.length !== callList.length) {
+    //     console.log('entrou')
+    //     handleLoading(callList.length - 1);
+    //   }
+
+    // }, [callList]);
     
       return (
       <section className="background--white padding-20-30 margin top-20 border radius-10">
+        {loading && <Loading />}
       <table>
         <thead>
           <tr className='color--gray-font-200'>
@@ -56,7 +126,7 @@ export const Home = ({ setProtocol, setPage, callList, setCallList }) => {
         </thead>
     
         <tbody>
-          {callList.map(item => (
+          {callList.length > 0 && callList.map(item => (
             <tr key={item.protocol.id} className='table-body color--gray-font-700'>
               <td className="border bottom-2">
                <button 

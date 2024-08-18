@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import './style.css';
 
+import { useNavigate  } from 'react-router-dom';
+
 import { LabelComponent } from '../../component/LabelComponent';
 import { KeyValueComponent } from '../../component/KeyValueComponent';
 
@@ -9,13 +11,23 @@ import contact from '../../assets/images/contact.svg';
 import notFound from '../../assets/images/not-found.svg';
 import arrowDown from '../../assets/images/arrow-down.svg';
 import arrowUp from '../../assets/images/arrow-up.svg';
-import { useState } from 'react';
+import send from '../../assets/images/send.svg';
+import { useEffect, useState } from 'react';
 import { STATUS_ORDER } from '../../utils/actions';
 import { sortedCallList } from '../../utils/functions';
+import { useCallList } from '../../context/useCallList';
 
-export const Calls = ({ protocol, setPage, callList, setCallList }) => {
+export const Calls = ({ protocol, setPage, messages, setMessages }) => {
+  const { callList, setCallList } = useCallList();
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [loader, setLoader] = useState(false);
+  const navigate = useNavigate();
+  const [height, setHeight] = useState(0);
   const findProtocol = callList.find(p => p.protocol.id === protocol);
+
+  console.log({height})
 
   const handleOptionClick = (status, protocolId) => {
     const updateStatus = callList.map(item => 
@@ -25,12 +37,63 @@ export const Calls = ({ protocol, setPage, callList, setCallList }) => {
       setPage(0);
     }
 
+    const handleSendMessage = async () => {
+      if (input.trim()) {
+        setMessages([...messages, { text: input, sender: 'User' }]);
+        setInput('');
+        setLoader(true);
+  
+        // Simula a resposta do GPT
+        setTimeout(() => {
+          setMessages(prevMessages => [
+            ...prevMessages,
+            { text: 'Resposta do GPT', sender: 'GPT' }
+          ]);
+          setLoader(false);
+  
+          // Simula a "transição" após a interação com o GPT
+          setTimeout(() => {
+            navigate.push('/crm');
+          }, 2000); // Redireciona após 2 segundos
+        }, 1000); // Tempo de resposta do GPT
+      }
+    };
+
+    useEffect(() => {
+let hideLoading;
+
+      if (loading !== null) {
+        hideLoading = setTimeout(() => {
+          setLoading(null);
+        }, 500);
+      }
+      const parentElement = document.querySelector('.call-info-container');
+      
+      if (parentElement) {
+        const parentHeight = parentElement.clientHeight;
+        setHeight(parentHeight);
+      }
+ 
+      const handleResize = () => {
+        if (parentElement) {
+          setHeight(parentElement.clientHeight);
+        }
+      };
+  
+      window.addEventListener('resize', handleResize);
+  
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        clearTimeout(hideLoading);
+      };
+    }, [setHeight, loading]);
+
     const callItem = findProtocol ? findProtocol : callList[0];
     const {protocol: protocolInfo, client, call_type, contract, priority} = callItem;
 
     return (
-      <section className='margin top-20'>
-        <section className="d-flex column gap-10">
+      <section className='d-flex margin top-20 gap-10'>
+        <section className="call-info-container d-flex flex column gap-10">
         <section className="background--white border radius-5 ">
           <LabelComponent 
           title={`N° Chamado: ${protocolInfo.id}`}
@@ -60,10 +123,10 @@ export const Calls = ({ protocol, setPage, callList, setCallList }) => {
          {isOptionsOpen && (
         <ul className="dropdown-menu">
           {STATUS_ORDER.map(item => (
-            <>
-              <li key={item.id} onClick={() => handleOptionClick(item, protocolInfo.id)}>{item.value}</li>
+            <div key={item.id} className='d-flex column gap-10'>
+              <li onClick={() => handleOptionClick(item, protocolInfo.id)}>{item.value}</li>
               <div className="divisor background--gray-font-200"></div>
-            </>
+            </div>
           ))}
         </ul>
       )}
@@ -145,6 +208,36 @@ export const Calls = ({ protocol, setPage, callList, setCallList }) => {
           </section>
           </section>
         </section>
+        <div className="chat-container background--white border radius-5" style={{height: `${height}px`}}>
+      <div className="header background--gray-500 color--white padding-10-20 border top-radius-5">
+          <h3>{client.name}</h3>
+          <span className='header-online'>online</span>
+        </div>
+        <div className="chat-content">
+        <div className="messages padding-10-20">
+        {messages.map((msg, index) => (
+          <div key={index} className={`message ${msg.sender === 'GPT' ? 'background--light-gray' : 'background--gray-200'}`}>
+            {msg.text}
+          </div>
+        ))}
+      </div>
+      {loader && <div className="loading"></div>}
+      <div className="input-container d-flex padding-10-20 border radius-5 gap-10">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+          placeholder="Digite uma mensagem..."
+        />
+        <button
+        className='bg-none' 
+        onClick={handleSendMessage}>
+          <img src={send} alt="Enviar" />
+        </button>
+      </div>
+        </div>
+    </div>
       </section>
     );
 }

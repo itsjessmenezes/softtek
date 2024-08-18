@@ -100,6 +100,10 @@ $font: (
   background: none;
 }
 
+.full {
+  width: 100%;
+}
+
 .status-gray {
   background-color: var(--status-gray);
 }
@@ -218,6 +222,11 @@ $font: (
   
   &.b-none {
     border: none;
+  }
+
+  &.top-radius-5 {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
   }
 }
 

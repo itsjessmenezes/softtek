@@ -18,3 +18,6 @@ export const LOW = {id: 'low', value: 'BAIXA'};
 
 export const STATUS_ORDER = [OPENED, IN_PROGRESS, WAITING, FINISHED];
 export const PRIORITY_ORDER = [HIGH, MEDIUM, LOW];
+
+export const ROLE_USER = 'user';
+export const ROLE_SYSTEM = 'system';
