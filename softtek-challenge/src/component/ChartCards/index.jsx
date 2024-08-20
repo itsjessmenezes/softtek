@@ -1,4 +1,4 @@
-import { findCallServiceByStatus, findCallServiceFromOpenAndClose, verifyServices } from '../../utils/custom';
+import { findCallServiceByStatus, findCallServiceFromOpenAndClose, findCallServiceFromTodayOpenAndClose } from '../../utils/custom';
 import '../../styles/global.scss';
 import './style.css';
 import { useCallList } from '../../context/useCallList';
@@ -16,7 +16,7 @@ const table = [
   {
     title: TICKETS,
     subtitle: "Hoje",
-    content: <PieChart data={verifyServices(callList, TICKETS)} labels={labels} />
+    content: <PieChart data={findCallServiceFromTodayOpenAndClose(callList)} labels={labels} />
   },
   {
     title: STATUS,

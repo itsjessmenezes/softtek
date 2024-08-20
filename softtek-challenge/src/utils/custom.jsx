@@ -1,4 +1,4 @@
-import { ABERTO, CHAMADOS, EM_ANDAMENTO, EM_ESPERA, ENCERRADO, STATUS, TICKETS } from "./actions";
+import { ABERTO, EM_ANDAMENTO, EM_ESPERA, ENCERRADO } from "./actions";
 
 const toLocalDateString = (date) => {
   const localDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
@@ -7,7 +7,7 @@ const toLocalDateString = (date) => {
 
 const isDateToday = (date) => {
   const providedDate = date.split('T')[0];
-  const today = toLocalDateString(new Date("2024-04-25T10:26"));
+  const today = toLocalDateString(new Date());
 
   return providedDate === today;
 };
@@ -24,7 +24,7 @@ export const findCallServiceFromOpenAndClose = (callList) => {
   return acc;
 }, initialCounts);
 
-return [result.countClosed, result.countOpened]
+return [result.countOpened, result.countClosed]
 };
 
 export const findCallServiceFromTodayOpenAndClose = (callList) => {
@@ -55,20 +55,6 @@ export const findCallServiceByStatus = (callList) => {
   
   return [result.countOpened, result.countInProgress, result.countWaiting, result.countClosed]
 
-};
-
-export const verifyServices = (callList, title) => {
-  switch (title) {
-    case TICKETS:
-      return findCallServiceFromTodayOpenAndClose(callList);
-    case STATUS:
-      return "";
-    case CHAMADOS:
-      return "";
-      default:
-        return;
-
-  }
 };
 
 export const color = (status) => {
