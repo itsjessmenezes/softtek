@@ -23,8 +23,6 @@ export const Home = ({ setProtocol, setPage, }) => {
   const fetchCallList = async () => {
       try {
           const response = await axios.get("http://localhost:5000/api/call-list");
-          console.log({response})
-
           if(response.data.length === callList.length) return;
 
           response.data.map(item =>     setCallList(prev => {
@@ -51,16 +49,6 @@ export const Home = ({ setProtocol, setPage, }) => {
      
       return () => clearInterval(interval);
     }, [])
-
-    useEffect(() => {
-      if (loading !== null) {
-        const hideLoading = setTimeout(() => {
-          setLoading(null);
-        }, 500);
-
-        return () => clearTimeout(hideLoading);
-      }
-    }, [loading]);
 
       return (
       <section className="background--white padding-20-30 margin top-20 border radius-10">

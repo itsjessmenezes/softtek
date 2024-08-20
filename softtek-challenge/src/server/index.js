@@ -22,15 +22,9 @@ app.use(express.json());
 const callList = list;
 let messageList = [];
 
-app.get('/api/call-list', (req, res) => {
-    res.json(callList);
-});
+app.get('/api/messages-list', async (req, res) => res.json(messageList));
 
-
-app.get('/api/messages-list', async (req, res) => {
-    console.log({messageList});
-    res.json(messageList);
-});
+app.get('/api/call-list', (req, res) => res.json(callList));
 
 app.post('/api/call-list', (req, res) => {
     const data = req.body;

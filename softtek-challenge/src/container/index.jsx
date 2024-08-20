@@ -7,17 +7,16 @@ import { ChartCards } from "../component/ChartCards";
 import { Home } from "./Home";
 import { Calls } from "./Calls";
 
-export const Main = ({ callList, messages, setMessages }) => {
+export const Main = ({ messages, setMessages }) => {
   const [page, setPage] = useState(0);
   const [protocol, setProtocol] = useState();
-  console.log("main", callList);
 
   return (
     <section className="home-container">
       <NavBar page={page} setPage={setPage} />
       <main>
         <Header />
-        <ChartCards />
+        <ChartCards/>
         {page === 0 ? (
           <Home
             protocol={protocol}

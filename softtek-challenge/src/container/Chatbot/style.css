@@ -9,6 +9,11 @@
     height: 100vh;
   }
 
+  .chat-section {
+    display: flex;
+    height: 100vh;
+  }
+
 .form-container {
     background: #fff;
     padding: 20px;
@@ -90,4 +95,22 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
+  }
+
+  .chat-content-chatbot {
+    height: 25rem;
+  }
+
+  .messages-chatbot {
+    height: 18rem;
+  }
+
+  .loading {
+    position: absolute;
+    bottom: 15%;
+    right: 7%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
   }

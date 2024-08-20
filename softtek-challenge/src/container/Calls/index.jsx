@@ -12,6 +12,7 @@ import notFound from "../../assets/images/not-found.svg";
 import arrowDown from "../../assets/images/arrow-down.svg";
 import arrowUp from "../../assets/images/arrow-up.svg";
 import send from "../../assets/images/send.svg";
+import robot from "../../assets/images/robot.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ROLE_SYSTEM, ROLE_USER, STATUS_ORDER } from "../../utils/actions";
@@ -59,24 +60,22 @@ export const Calls = ({ protocol, setPage, messages, setMessages }) => {
 
   const fetchMessagens = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/messages-list");
-      console.log({ response: response.data });
-      setMessages(prev => ([...prev, { text: response.data, sender: ROLE_USER } ]))
+      const response = await axios.get(
+        "http://localhost:5000/api/messages-list"
+      );
+
+      setMessages((prev) => [
+        ...prev,
+        { text: response.data, sender: ROLE_USER },
+      ]);
     } catch (error) {
       console.error("Error fetching callList:", error);
     }
   };
 
   useEffect(() => {
-      fetchMessagens();
-    // const interval = setInterval(() => {
-    //   fetchMessagens();
-
-    //   setLoading(false)
-    // }, 3000)
-   
-    // return () => clearInterval(interval);
-  }, []);
+    fetchMessagens();
+}, []);
 
   useEffect(() => {
     let hideLoading;
@@ -115,8 +114,6 @@ export const Calls = ({ protocol, setPage, messages, setMessages }) => {
     contract,
     priority,
   } = callItem;
-
-  console.log({messages})
 
   return (
     <section className="d-flex margin top-20 gap-10">
@@ -167,6 +164,7 @@ export const Calls = ({ protocol, setPage, messages, setMessages }) => {
             }
           />
         </section>
+
         <section className="background--white border radius-5">
           <LabelComponent
             title={client.company_name}
@@ -198,6 +196,7 @@ export const Calls = ({ protocol, setPage, messages, setMessages }) => {
             }
           />
         </section>
+
         <section className="background--white border radius-5">
           <div className="margin bottom-20">
             <LabelComponent
@@ -231,7 +230,9 @@ export const Calls = ({ protocol, setPage, messages, setMessages }) => {
               }
             />
           </div>
+
           <div className="divisor background--gray-font-200 margin bottom-20"></div>
+
           <section className="interactions-history padding-10-20">
             <h3 className="margin bottom-20 color--gray-font-900">
               Histórico de Interações
@@ -245,6 +246,14 @@ export const Calls = ({ protocol, setPage, messages, setMessages }) => {
               <h4 className="color--gray-font-900">
                 Nenhum resultado encontrado
               </h4>
+            </div>
+          </section>
+          <div className="divisor background--gray-font-200 margin bottom-20"></div>
+
+          <section className="suggestion padding-10-20">
+            <span className="color--gray-font-700">{call_type.suggestion}</span>
+            <div className="d-flex justify-end">
+              <img src={robot} alt="Sugestão da IA" />
             </div>
           </section>
         </section>

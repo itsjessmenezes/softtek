@@ -7,6 +7,10 @@ export const MUDANCA = "Mudança";
 export const INCIDENTE = "Incidente";
 export const REQUISICAO = "Requisição";
 
+export const TICKETS = "TICKETS";
+export const STATUS = "STATUS";
+export const CHAMADOS = "CHAMADOS";
+
 export const OPENED = {id: 'opened', value: 'Aberto'};
 export const IN_PROGRESS = {id: 'in_progress', value: 'Em andamento'};
 export const WAITING = {id: 'waiting', value: 'Em espera'};

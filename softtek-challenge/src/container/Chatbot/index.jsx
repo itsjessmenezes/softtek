@@ -6,13 +6,13 @@ import bdClients from "../../utils/bdClients.json";
 import { useCallList } from "../../context/useCallList";
 
 import './style.css';
-import '../Calls/style.css';
 export const Chatbot = ({
   messages,
   setMessages,
 }) => {
     const { 
         callList,
+        setCallList,
     } = useCallList();
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -66,18 +66,19 @@ export const Chatbot = ({
   const saveNewItem = async (newCall) => {
     try {
         const response = await axios.post('http://localhost:5000/api/call-list', newCall);
+        setCallList(prev => ([...prev, response.data]))
         console.log('Added to Call List:', response.data);
     } catch (error) {
         console.error('Error adding to call list:', error);
     }
   }
 
+
   const handleSubmitGPT = async (event) => {
     event.preventDefault();
 
     if (message.trim()) {
       const newMessages = [...messages, { text: message, sender: ROLE_USER }];
-      console.log({ newMessages, messages });
       setMessages(newMessages);
       setMessage("");
       setLoading(true);
@@ -114,7 +115,7 @@ export const Chatbot = ({
             const newCall = {
                 ...verifyCompanyExists,
                 protocol: {
-                  id: 123023932 + callList.length,
+                  id: 123023923 + callList.length,
                   create_date: new Date().toISOString(),
                 },
                 client : {
@@ -133,6 +134,20 @@ export const Chatbot = ({
 
               saveNewItem(newCall);
           }
+
+          setMessages([]);
+          setMessage("");
+          setOpenChat(false);
+          setFormValues({
+            clientName: "",
+            document: {
+              type: documentTypes[0],
+              value: "",
+            },
+            service: {
+              type: serviceTypes[0],
+            },
+          });
           alert(
             "Seu atendimento será redirecionado a um atendente. Por favor, aguarde."
           );
@@ -145,10 +160,6 @@ export const Chatbot = ({
 
     setLoading(false);
   };
-
-  console.log(formValues);
-
-
 
   return !openChat ? (
     <div className="container">
@@ -243,16 +254,19 @@ export const Chatbot = ({
       </div>
     </div>
   ) : (
-    <div className="chat-container">
-      <div className="messages">
+    <section className="chat-section">
+          <div className="chat-container background--white border radius-5">
+      <div className="chat-content chat-content-chatbot">
+        <div className="messages messages-chatbot padding-10-20">
         {messages.map((msg, index) => (
           <div key={index} className={`message ${msg.sender}`}>
             {msg.text}
           </div>
         ))}
+        </div>
       </div>
-      {loading && <div className="loading">Carregando...</div>}
-      <div className="input-container">
+      {loading && <div className="loading"></div>}
+      <div className="input-container d-flex padding-10-20 border radius-5 gap-10">
         <input
           type="text"
           value={message}
@@ -263,5 +277,6 @@ export const Chatbot = ({
         <button onClick={handleSubmitGPT}>Enviar</button>
       </div>
     </div>
+    </section>
   );
 }

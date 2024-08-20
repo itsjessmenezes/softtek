@@ -1,331 +1,343 @@
 [
-    {
-      "protocol": {
-        "id": "123023923",
-        "create_date": "2024-04-25T10:26"
-      },
-      "client": {
-        "name": "Lucas Silveira",
-        "company_name": "Farmacity",
-        "document_type": "CPF",
-        "document_number": "06014255532",
-                "address": {
-          "street": "Av Paulista",
-          "street_number": "2309",
-          "state_code": "SP"
-        },
-        "phone": "(11) 9 9343-3409"
-      },
-      "status": "Em andamento",
-      "call_type": {
-        "title": "Problema",
-        "description": "Erro ao acessar o aplicativo"
-      },
-      "contract": {
-        "renewal_contract": "2024-12-31T12:00",
-        "contract_type": "Mensal",
-        "price": 5000
-      },
-      "priority": "ALTA",
-      "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+  {
+    "protocol": {
+      "id": "123023923",
+      "create_date": "2024-04-25T10:26"
     },
-    {
-      "protocol": {
-        "id": "123023924",
-        "create_date": "2024-04-25T10:47"
+    "client": {
+      "name": "Lucas Silveira",
+      "company_name": "Farmacity",
+      "document_type": "CPF",
+      "document_number": "06014255532",
+      "address": {
+        "street": "Av Paulista",
+        "street_number": "2309",
+        "state_code": "SP"
       },
-      "client": {
-        "name": "Larissa Almeida",
-        "company_name": "Copiadora Bell",
-        "document_type": "CNPJ",
-        "document_number": "52462015/0001-75",
-                "address": {
-          "street": "Av Paulista",
-          "street_number": "2309",
-          "state_code": "SP"
-        },
-        "phone": "(11) 9 9343-3409"
-      },
-      "status": "Em andamento",
-      "call_type": {
-        "title": "Requisição",
-        "description": "Erro ao acessar o aplicativo"
-      },
-      "contract": {
-        "renewal_contract": "2024-12-31T12:00",
-        "contract_type": "Anual",
-        "price": 5000
-      },
-      "priority": "MEDIA",
-      "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+      "phone": "(11) 9 9343-3409"
     },
-    {
-      "protocol": {
-        "id": "123023925",
-        "create_date": "2024-04-25T11:03"
-      },
-      "client": {
-        "name": "Joice Davila",
-        "company_name": "Papelaria Max10",
-        "document_type": "CPF",
-        "document_number": "1234567890",
-                "address": {
-          "street": "Av Paulista",
-          "street_number": "2309",
-          "state_code": "SP"
-        },
-        "phone": "(11) 9 9343-3409"
-      },
-      "status": "Em andamento",
-      "call_type": {
-        "title": "Requisição",
-        "description": "Erro ao acessar o aplicativo"
-      },
-      "contract": {
-        "renewal_contract": "2024-12-31T12:00",
-        "contract_type": "Mensal",
-        "price": 5000
-      },
-      "priority": "MEDIA",
-      "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+    "status": "Em andamento",
+    "call_type": {
+      "title": "Problema",
+      "description": "Erro ao acessar o aplicativo",
+      "suggestion": "Verificar as configurações de autenticação e garantir que as credenciais estejam corretas. Se o problema persistir, reiniciar o aplicativo pode ajudar."
     },
-    {
-      "protocol": {
-        "id": "123023926",
-        "create_date": "2024-04-25T11:12"
-      },
-      "client": {
-        "name": "Maria Santos",
-        "company_name": "Café Aroma",
-        "document_type": "CNPJ",
-        "document_number": "91430651/0001-77",
-                "address": {
-          "street": "Av Paulista",
-          "street_number": "2309",
-          "state_code": "SP"
-        },
-        "phone": "(11) 9 9343-3409"
-      },
-      "status": "Em andamento",
-      "call_type": {
-        "title": "Mudança",
-        "description": "Erro ao acessar o aplicativo"
-      },
-      "contract": {
-        "renewal_contract": "2024-12-31T12:00",
-        "contract_type": "Semestral",
-        "price": 5000
-      },
-      "priority": "MEDIA",
-      "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+    "contract": {
+      "renewal_contract": "2024-12-31T12:00",
+      "contract_type": "Mensal",
+      "price": 5000
     },
-    {
-      "protocol": {
-        "id": "123023927",
-        "create_date": "2024-04-25T11:24"
-      },
-      "client": {
-        "name": "Rafael Fernandes",
-        "company_name": "Floricultura Primavera",
-        "document_type": "CNPJ",
-        "document_number": "86122164/0001-07",
-                "address": {
-          "street": "Av Paulista",
-          "street_number": "2309",
-          "state_code": "SP"
-        },
-        "phone": "(11) 9 9343-3409"
-      },
-      "status": "Em espera",
-      "call_type": {
-        "title": "Problema",
-        "description": "Erro ao acessar o aplicativo"
-      },
-      "contract": {
-        "renewal_contract": "2024-12-31T12:00",
-        "contract_type": "Anual",
-        "price": 5000
-      },
-      "priority": "MEDIA",
-      "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+    "priority": "ALTA",
+    "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+  },
+  {
+    "protocol": {
+      "id": "123023924",
+      "create_date": "2024-04-25T10:47"
     },
-    {
-      "protocol": {
-        "id": "123023928",
-        "create_date": "2024-04-25T09:51"
+    "client": {
+      "name": "Larissa Almeida",
+      "company_name": "Copiadora Bell",
+      "document_type": "CNPJ",
+      "document_number": "52462015/0001-75",
+      "address": {
+        "street": "Av Paulista",
+        "street_number": "2309",
+        "state_code": "SP"
       },
-      "client": {
-        "name": "Carlos Mendes",
-        "company_name": "Livraria Becco",
-        "document_type": "CPF",
-        "document_number": "45846031030",
-                "address": {
-          "street": "Av Paulista",
-          "street_number": "2309",
-          "state_code": "SP"
-        },
-        "phone": "(11) 9 9343-3409"
-      },
-      "status": "Em espera",
-      "call_type": {
-        "title": "Problema",
-        "description": "Erro ao acessar o aplicativo"
-      },
-      "contract": {
-        "renewal_contract": "2024-12-31T12:00",
-        "contract_type": "Trimestral",
-        "price": 5000
-      },
-      "priority": "BAIXA",
-      "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+      "phone": "(11) 9 9343-3409"
     },
-    {
-      "protocol": {
-        "id": "123023929",
-        "create_date": "2024-04-25T09:51"
-      },
-      "client": {
-        "name": "Amanda Lima",
-        "company_name": "Academia Vital",
-        "document_type": "CNPJ",
-        "document_number": "04516473/0001-05",
-                "address": {
-          "street": "Av Paulista",
-          "street_number": "2309",
-          "state_code": "SP"
-        },
-        "phone": "(11) 9 9343-3409"
-      },
-      "status": "Encerrado",
-      "call_type": {
-        "title": "Problema",
-        "description": "Erro ao acessar o aplicativo"
-      },
-      "contract": {
-        "renewal_contract": "2024-12-31T12:00",
-        "contract_type": "Mensal",
-        "price": 5000
-      },
-      "priority": "BAIXA",
-      "description": "Usuário está recebendo um erro ao acessar o aplicativo de emai. Mensagem de erro: Erro de autenticação"
-    },     {
-      "protocol": {
-        "id": "123023930",
-        "create_date": "2024-04-29T15:44"
-      },
-      "client": {
-        "name": "Sofia Pereira",
-        "company_name": "Pereira & Cia",
-        "document_type": "CPF",
-        "document_number": "987.654.321-00",
-        "address": {
-          "street": "Rua da Paz",
-          "street_number": "789",
-          "state_code": "RS"
-        },
-        "phone": "(51) 9 8765-4321"
-      },
-      "status": "Em andamento",
-      "call_type": {
-        "title": "Solicitação",
-        "description": "Atualização de informações cadastrais"
-      },
-      "contract": {
-        "renewal_contract": "2024-11-15T09:00",
-        "contract_type": "Mensal",
-        "price": 500
-      },
-      "priority": "BAIXA",
-      "description": "Cliente solicitou atualização de informações cadastrais na plataforma."
+    "status": "Em andamento",
+    "call_type": {
+      "title": "Requisição",
+      "description": "Erro ao acessar o aplicativo",
+      "suggestion": "Confirmar se o usuário está inserindo as credenciais corretas e se a conexão com a internet está estável. Verificar se há atualizações disponíveis para o aplicativo."
     },
-    {
-      "protocol": {
-        "id": "123023931",
-        "create_date": "2024-04-30T16:55"
-      },
-      "client": {
-        "name": "Marcos Oliveira",
-        "company_name": "Oliveira Engenharia",
-        "document_type": "CNPJ",
-        "document_number": "07890123/0001-10",
-        "address": {
-          "street": "Rua do Engenheiro",
-          "street_number": "345",
-          "state_code": "SP"
-        },
-        "phone": "(11) 9 2345-6789"
-      },
-      "status": "Encerrado",
-      "call_type": {
-        "title": "Problema",
-        "description": "Instabilidade no servidor"
-      },
-      "contract": {
-        "renewal_contract": "2024-09-01T08:00",
-        "contract_type": "Semestral",
-        "price": 3000
-      },
-      "priority": "MEDIA",
-      "description": "Servidor apresentando instabilidade e dificuldades de acesso frequentes."
+    "contract": {
+      "renewal_contract": "2024-12-31T12:00",
+      "contract_type": "Anual",
+      "price": 5000
     },
-    {
-      "protocol": {
-        "id": "123023932",
-        "create_date": "2024-05-01T08:20"
-      },
-      "client": {
-        "name": "Ana Souza",
-        "company_name": "Souza & Filhos",
-        "document_type": "CPF",
-        "document_number": "456.789.123-45",
-        "address": {
-          "street": "Rua dos Trabalhadores",
-          "street_number": "234",
-          "state_code": "PR"
-        },
-        "phone": "(41) 9 5678-1234"
-      },
-      "status": "Em espera",
-      "call_type": {
-        "title": "Reclamação",
-        "description": "Dificuldades na integração com o sistema"
-      },
-      "contract": {
-        "renewal_contract": "2024-08-01T10:00",
-        "contract_type": "Trimestral",
-        "price": 1800
-      },
-      "priority": "ALTA",
-      "description": "Cliente está enfrentando dificuldades na integração com o sistema de gestão."
+    "priority": "MEDIA",
+    "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+  },
+  {
+    "protocol": {
+      "id": "123023925",
+      "create_date": "2024-04-25T11:03"
     },
-    {
-      "protocol": {
-        "id": "123023933",
-        "create_date": "2024-05-02T09:30"
+    "client": {
+      "name": "Joice Davila",
+      "company_name": "Papelaria Max10",
+      "document_type": "CPF",
+      "document_number": "1234567890",
+      "address": {
+        "street": "Av Paulista",
+        "street_number": "2309",
+        "state_code": "SP"
       },
-      "client": {
-        "name": "Felipe Martins",
-        "company_name": "Martins & Co",
-        "document_type": "CNPJ",
-        "document_number": "08901234/0001-11",
-        "address": {
-          "street": "Av das Nações",
-          "street_number": "567",
-          "state_code": "RJ"
-        },
-        "phone": "(21) 9 3456-7890"
+      "phone": "(11) 9 9343-3409"
+    },
+    "status": "Em andamento",
+    "call_type": {
+      "title": "Requisição",
+      "description": "Erro ao acessar o aplicativo",
+      "suggestion": "Verificar se o aplicativo está atualizado e realizar uma verificação de integridade dos arquivos do sistema. Tentar reiniciar o dispositivo pode ajudar."
+    },
+    "contract": {
+      "renewal_contract": "2024-12-31T12:00",
+      "contract_type": "Mensal",
+      "price": 5000
+    },
+    "priority": "MEDIA",
+    "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+  },
+  {
+    "protocol": {
+      "id": "123023926",
+      "create_date": "2024-04-25T11:12"
+    },
+    "client": {
+      "name": "Maria Santos",
+      "company_name": "Café Aroma",
+      "document_type": "CNPJ",
+      "document_number": "91430651/0001-77",
+      "address": {
+        "street": "Av Paulista",
+        "street_number": "2309",
+        "state_code": "SP"
       },
-      "status": "Encerrado",
-      "call_type": {
-        "title": "Erro",
-        "description": "Erro no módulo de relatórios"
+      "phone": "(11) 9 9343-3409"
+    },
+    "status": "Em andamento",
+    "call_type": {
+      "title": "Mudança",
+      "description": "Erro ao acessar o aplicativo",
+      "suggestion": "Certificar-se de que todas as permissões necessárias para o aplicativo estejam concedidas e revisar se há problemas com a configuração do servidor."
+    },
+    "contract": {
+      "renewal_contract": "2024-12-31T12:00",
+      "contract_type": "Semestral",
+      "price": 5000
+    },
+    "priority": "MEDIA",
+    "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+  },
+  {
+    "protocol": {
+      "id": "123023927",
+      "create_date": "2024-04-25T11:24"
+    },
+    "client": {
+      "name": "Rafael Fernandes",
+      "company_name": "Floricultura Primavera",
+      "document_type": "CNPJ",
+      "document_number": "86122164/0001-07",
+      "address": {
+        "street": "Av Paulista",
+        "street_number": "2309",
+        "state_code": "SP"
       },
-      "contract": {
-        "renewal_contract": "2024-12-15T12:00",
-        "contract_type": "Anual",
-        "price": 5500
+      "phone": "(11) 9 9343-3409"
+    },
+    "status": "Em espera",
+    "call_type": {
+      "title": "Problema",
+      "description": "Erro ao acessar o aplicativo",
+      "suggestion": "Reiniciar o aplicativo e verificar se há mensagens de erro específicas que possam fornecer mais detalhes sobre o problema. Confirmar também se o servidor está operacional."
+    },
+    "contract": {
+      "renewal_contract": "2024-12-31T12:00",
+      "contract_type": "Anual",
+      "price": 5000
+    },
+    "priority": "MEDIA",
+    "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+  },
+  {
+    "protocol": {
+      "id": "123023928",
+      "create_date": "2024-04-25T09:51"
+    },
+    "client": {
+      "name": "Carlos Mendes",
+      "company_name": "Livraria Becco",
+      "document_type": "CPF",
+      "document_number": "45846031030",
+      "address": {
+        "street": "Av Paulista",
+        "street_number": "2309",
+        "state_code": "SP"
       },
-      "priority": "MEDIA",
-      "description": "Erro crítico no módulo de relatórios impactando a geração de relatórios financeiros."
-    }
-  ]
+      "phone": "(11) 9 9343-3409"
+    },
+    "status": "Em espera",
+    "call_type": {
+      "title": "Problema",
+      "description": "Erro ao acessar o aplicativo",
+      "suggestion": "Verificar se há erros de digitação na mensagem de erro. Confirmar se o sistema está atualizado e se há problemas conhecidos com o servidor."
+    },
+    "contract": {
+      "renewal_contract": "2024-12-31T12:00",
+      "contract_type": "Trimestral",
+      "price": 5000
+    },
+    "priority": "BAIXA",
+    "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+  },
+  {
+    "protocol": {
+      "id": "123023929",
+      "create_date": "2024-04-25T09:51"
+    },
+    "client": {
+      "name": "Amanda Lima",
+      "company_name": "Academia Vital",
+      "document_type": "CNPJ",
+      "document_number": "04516473/0001-05",
+      "address": {
+        "street": "Av Paulista",
+        "street_number": "2309",
+        "state_code": "SP"
+      },
+      "phone": "(11) 9 9343-3409"
+    },
+    "status": "Encerrado",
+    "call_type": {
+      "title": "Problema",
+      "description": "Erro ao acessar o aplicativo",
+      "suggestion": "Confirmar se o erro é recorrente e se há logs ou registros adicionais que possam ajudar na resolução. Verificar também a configuração do aplicativo para possíveis inconsistências."
+    },
+    "contract": {
+      "renewal_contract": "2024-12-31T12:00",
+      "contract_type": "Mensal",
+      "price": 5000
+    },
+    "priority": "BAIXA",
+    "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+  },
+  {
+    "protocol": {
+      "id": "123023930",
+      "create_date": "2024-04-29T15:44"
+    },
+    "client": {
+      "name": "Sofia Pereira",
+      "company_name": "Pereira & Cia",
+      "document_type": "CPF",
+      "document_number": "987.654.321-00",
+      "address": {
+        "street": "Rua da Paz",
+        "street_number": "789",
+        "state_code": "RS"
+      },
+      "phone": "(51) 9 8765-4321"
+    },
+    "status": "Em andamento",
+    "call_type": {
+      "title": "Solicitação",
+      "description": "Atualização de informações cadastrais",
+      "suggestion": "Verificar se as informações cadastrais do cliente estão completas e corretas. Garantir que o processo de atualização esteja sendo seguido corretamente."
+    },
+    "contract": {
+      "renewal_contract": "2024-11-15T09:00",
+      "contract_type": "Mensal",
+      "price": 500
+    },
+    "priority": "BAIXA",
+    "description": "Cliente solicitou atualização de informações cadastrais na plataforma."
+  },
+  {
+    "protocol": {
+      "id": "123023931",
+      "create_date": "2024-04-30T16:55"
+    },
+    "client": {
+      "name": "Marcos Oliveira",
+      "company_name": "Oliveira Engenharia",
+      "document_type": "CNPJ",
+      "document_number": "07890123/0001-10",
+      "address": {
+        "street": "Rua do Engenheiro",
+        "street_number": "345",
+        "state_code": "SP"
+      },
+      "phone": "(11) 9 2345-6789"
+    },
+    "status": "Encerrado",
+    "call_type": {
+      "title": "Problema",
+      "description": "Instabilidade no servidor",
+      "suggestion": "Verificar os logs do servidor para identificar a causa da instabilidade. Reavaliar a configuração do servidor e considerar uma manutenção preventiva."
+    },
+    "contract": {
+      "renewal_contract": "2024-09-01T08:00",
+      "contract_type": "Semestral",
+      "price": 3000
+    },
+    "priority": "MEDIA",
+    "description": "Servidor apresentando instabilidade e dificuldades de acesso frequentes."
+  },
+  {
+    "protocol": {
+      "id": "123023932",
+      "create_date": "2024-05-01T08:20"
+    },
+    "client": {
+      "name": "Ana Souza",
+      "company_name": "Souza & Filhos",
+      "document_type": "CPF",
+      "document_number": "456.789.123-45",
+      "address": {
+        "street": "Rua dos Trabalhadores",
+        "street_number": "234",
+        "state_code": "PR"
+      },
+      "phone": "(41) 9 5678-1234"
+    },
+    "status": "Em espera",
+    "call_type": {
+      "title": "Reclamação",
+      "description": "Dificuldades na integração com o sistema",
+      "suggestion": "Rever as configurações de integração e verificar se as credenciais estão corretas. Consultar a documentação do sistema para solucionar problemas comuns de integração."
+    },
+    "contract": {
+      "renewal_contract": "2024-08-01T10:00",
+      "contract_type": "Trimestral",
+      "price": 1800
+    },
+    "priority": "ALTA",
+    "description": "Cliente está enfrentando dificuldades na integração com o sistema de gestão."
+  },
+  {
+    "protocol": {
+      "id": "123023933",
+      "create_date": "2024-05-02T09:30"
+    },
+    "client": {
+      "name": "Felipe Martins",
+      "company_name": "Martins & Co",
+      "document_type": "CNPJ",
+      "document_number": "08901234/0001-11",
+      "address": {
+        "street": "Av das Nações",
+        "street_number": "567",
+        "state_code": "RJ"
+      },
+      "phone": "(21) 9 3456-7890"
+    },
+    "status": "Encerrado",
+    "call_type": {
+      "title": "Erro",
+      "description": "Erro no módulo de relatórios",
+      "suggestion": "Verificar o código-fonte do módulo de relatórios para identificar e corrigir o erro. Certificar-se de que todas as dependências do módulo estão atualizadas."
+    },
+    "contract": {
+      "renewal_contract": "2024-12-15T12:00",
+      "contract_type": "Anual",
+      "price": 5500
+    },
+    "priority": "MEDIA",
+    "description": "Erro crítico no módulo de relatórios impactando a geração de relatórios financeiros."
+  }
+]
