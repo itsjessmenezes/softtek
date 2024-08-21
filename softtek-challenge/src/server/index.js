@@ -62,7 +62,6 @@ app.post('/api/chat', async (req, res) => {
 
         
         const messageContent = response.data.choices[0].message.content;
-        // messageList = messages;
         messageList = messageContent;
     
         res.json({ message: messageContent });

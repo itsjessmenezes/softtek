@@ -1,16 +1,18 @@
 /* eslint-disable react/prop-types */
 import './style.css';
-import { color } from '../../utils/custom';
+import { color, toLocalDateString } from '../../utils/custom';
 import axios from "axios";
 import tableHead from './tableHead.json';
 import { useEffect, useState } from 'react';
 import { sortedCallList } from '../../utils/functions';
 import { Loading } from '../../component/Loading';
 import { useCallList } from '../../context/useCallList';
+import newCalls from '../../utils/newCalls.json';
 
 export const Home = ({ setProtocol, setPage, }) => {
   const { callList, setCallList, } = useCallList();
   const [loading, setLoading] = useState(null);
+  const [hasNewItens, setHasNewItens] = useState(true);
 
     const handleClickProtocol = (item) => {
         if(item.status === 'Encerrado') return;
@@ -39,7 +41,40 @@ export const Home = ({ setProtocol, setPage, }) => {
       }
   };
 
+
+  const saveNewItem = async (newCall) => {
+    try {
+      const updatedNewCall = {
+        ...newCall,
+        protocol: {
+          ...newCall.protocol,
+          create_date: toLocalDateString(new Date())
+        },
+      };
+        const response = await axios.post('http://localhost:5000/api/call-list', updatedNewCall);
+        setCallList(prev => ([...prev, response.data]))
+    } catch (error) {
+        console.error('Error adding to call list:', error);
+    }
+  }
+
+  const setNewItens = () => {
+    setLoading(true);
+    while (newCalls.length > 0) {
+      const call = newCalls.shift();
+      saveNewItem(call);
+  }
+  
+  setLoading(false);
+  setHasNewItens(false);
+}
+
     useEffect(() => {
+      setNewItens();
+    }, [])
+
+    useEffect(() => {
+      if(hasNewItens) return;
       setLoading(true);
       const interval = setInterval(() => {
         fetchCallList();
@@ -48,7 +83,7 @@ export const Home = ({ setProtocol, setPage, }) => {
       }, 3000)
      
       return () => clearInterval(interval);
-    }, [])
+    }, [hasNewItens])
 
       return (
       <section className="background--white padding-20-30 margin top-20 border radius-10">

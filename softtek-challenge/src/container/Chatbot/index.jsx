@@ -31,10 +31,6 @@ export const Chatbot = ({
   });
 
   const { clientName, document, service } = formValues;
-  /**
-   * 
-   * verificar como farei para ter um novo contato com o gpt e ele preencher os campos que faltam no redirect
-   */
   const verifyCompanyExists = bdClients.find(({ client }) => {
     if (document.type === "nome da empresa") {
       return (
@@ -115,7 +111,7 @@ export const Chatbot = ({
             const newCall = {
                 ...verifyCompanyExists,
                 protocol: {
-                  id: 123023923 + callList.length,
+                  id: 123023937 + callList.length,
                   create_date: new Date().toISOString(),
                 },
                 client : {

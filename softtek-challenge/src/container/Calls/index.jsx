@@ -115,6 +115,7 @@ export const Calls = ({ protocol, setPage, messages, setMessages }) => {
     priority,
   } = callItem;
 
+
   return (
     <section className="d-flex margin top-20 gap-10">
       <section className="call-info-container d-flex flex column gap-10">
@@ -268,7 +269,7 @@ export const Calls = ({ protocol, setPage, messages, setMessages }) => {
         </div>
         <div className="chat-content">
           <div className="messages padding-10-20">
-            {messages.map((msg, index) => (
+            {messages.map((msg, index) => typeof msg.text !== 'object' && (
               <div
                 key={index}
                 className={`message ${
