@@ -13,6 +13,7 @@ import arrowDown from "../../assets/images/arrow-down.svg";
 import arrowUp from "../../assets/images/arrow-up.svg";
 import send from "../../assets/images/send.svg";
 import robot from "../../assets/images/robot.svg";
+import brokeRobot from "../../assets/images/broke-robot.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ROLE_SYSTEM, ROLE_USER, STATUS_ORDER } from "../../utils/actions";
@@ -252,10 +253,18 @@ export const Calls = ({ protocol, setPage, messages, setMessages }) => {
           <div className="divisor background--gray-font-200 margin bottom-20"></div>
 
           <section className="suggestion padding-10-20">
-            <span className="color--gray-font-700">{call_type.suggestion}</span>
-            <div className="d-flex justify-end">
-              <img src={robot} alt="Sugestão da IA" />
+              {call_type.suggestion ? (
+            <div className="suggestion-title d-flex">
+                <img src={robot} alt="Sugestão da IA" />
+                <span className="color--gray-font-700 font weight--bold">Softinho sugere:</span>
             </div>
+              ) : (
+                <div className="d-flex column full align-center justify-center margin bottom-10 gap-10">
+                   <img src={brokeRobot} alt="Sugestão da IA" />
+                  <span className="color--gray-font-700">Oops, o Softinho não conseguiu criar uma sugestão para este atendimento</span>
+                </div>
+              )}
+            <span className="color--gray-font-700">{call_type.suggestion}</span>
           </section>
         </section>
       </section>

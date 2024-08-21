@@ -21,6 +21,7 @@ main {
 
 .close-call--btn {
   font-family: "M PLUS 2", sans-serif;
+  padding: 0;
 }
 .content-button {
   position: relative;
@@ -39,6 +40,22 @@ main {
   padding: 10px 20px;
 
   cursor: pointer;
+}
+
+.suggestion {
+  display: flex;
+}
+
+.suggestion > span {
+  font-style: italic;
+  padding: 20px;
+}
+
+.suggestion-title {
+  min-width: 13rem;
+  align-items: center;
+  gap: 10px;
+  font-style: italic;
 }
 
 .header-online {
