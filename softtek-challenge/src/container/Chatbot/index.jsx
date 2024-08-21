@@ -270,7 +270,7 @@ export const Chatbot = ({
           onKeyPress={(e) => e.key === "Enter" && handleSubmitGPT()}
           placeholder="Digite uma mensagem..."
         />
-        <button onClick={handleSubmitGPT}>Enviar</button>
+        <button className="background--purple-gradient" onClick={handleSubmitGPT}>Enviar</button>
       </div>
     </div>
     </section>
