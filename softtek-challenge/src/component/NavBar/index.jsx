@@ -2,16 +2,14 @@ import home from '../../assets/images/home.svg';
 import homeSelected from '../../assets/images/home-selected.svg';
 import headset from '../../assets/images/headset.svg';
 import headsetSelected from '../../assets/images/headset-selected.svg';
-import talk from '../../assets/images/talk.svg';
-import talkSelected from '../../assets/images/talk-selected.svg';
-
 
 import config from '../../assets/images/config.svg';
 import help from '../../assets/images/help.svg';
 
 import './style.css';
 
-export const NavBar = () => {
+// eslint-disable-next-line react/prop-types
+export const NavBar = ({ page, setPage }) => {
     const navOptions = [
         {
           img: home,
@@ -22,11 +20,6 @@ export const NavBar = () => {
           img: headset,
           imgSelected: headsetSelected,
           title: 'Chamados'
-        },
-        {
-          img: talk,
-          imgSelected: talkSelected,
-          title: 'Atendimento'
         },
       ];
 
@@ -43,15 +36,19 @@ export const NavBar = () => {
       ];
 
     return (
-        <nav>
-        <div>
+      <nav className='background--white'>
+        <div className='d-flex column align-center gap-10'>
           <h2 className='logo'>FIAP Engineers</h2>
-          <div className='divisor'></div>
-
-          <ul>
-            {navOptions.map(({ title, img }) => (
-              <li key={title}>
-                <img src={img} alt={title} />
+          <div className='divisor background--gray-font-200 margin bottom-20'></div>
+          <ul className='d-flex column gap-10'>
+            {navOptions.map(({ title, img, imgSelected }) => (
+              <li
+              className={page === (title === 'Home' ? 0 : 1) ? 'selected color--purple-font-500' : ''}
+              key={title}
+              onClick={() => title === 'Home' ? setPage(0) : setPage(1)}>
+                <img 
+                 src={page === (title === 'Home' ? 0 : 1) ? imgSelected : img} 
+                 alt={title} />
                 <span>{title}</span>
               </li>
             ))}
@@ -59,7 +56,7 @@ export const NavBar = () => {
         </div>
 
         <div className="footer">
-          <div className="divisor"></div>
+          <div className="divisor background--gray-font-200 margin bottom-20"></div>
 
           <ul>
             {navFooterOptions.map(({ title, img }) => (

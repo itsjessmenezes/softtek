@@ -1,6 +1,5 @@
 nav {
-    background-color: var(--white);
-    min-width: 20rem;
+    min-width: 20%;
     display: flex;
     flex-direction: column;
     padding: 10px 20px;
@@ -17,12 +16,6 @@ nav {
   }
   
   nav ul {
-    display: flex;
-    flex-direction: column;
-    margin-top: 3rem;
-    margin-left: 5rem;
-    gap: 10px;
-  
     list-style: none;
   }
   
@@ -31,4 +24,9 @@ nav {
     gap: 5px;
   
     cursor: pointer;
+  }
+
+  .selected {
+    color: var(--purple-font-500);
+    font-weight: bold;
   }

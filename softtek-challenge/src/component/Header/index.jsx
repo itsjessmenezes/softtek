@@ -5,7 +5,7 @@ export const Header = () => {
 
 
     return (
-        <header>
+        <header className='background--white padding-10-20 border radius-5'>
         <div className="search-box">
           <input type="text" className='input-search' placeholder='Pesquisar' />
         </div>

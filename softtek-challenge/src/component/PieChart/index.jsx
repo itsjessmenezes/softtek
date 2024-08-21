@@ -21,8 +21,10 @@ export const PieChart = ({ data, labels }) => {
               label: 'Pie Chart',
               data: data,
               backgroundColor: [
-                'rgba(162,87,247,1)',
-                '#E1E9FF',
+                'rgb(54, 53, 162)',
+                'rgba(162,87,247)',
+                'rgb(111, 108, 246)',
+                'rgb(175, 132, 224)',
               ],
             }]
           },

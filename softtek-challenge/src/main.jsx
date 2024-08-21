@@ -1,9 +1,14 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { Home } from './container/Home/index.jsx'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+
+import './styles/global.scss';
+import { App } from './App';
+import { CallListProvider } from './context/useCallList';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Home />
+   <CallListProvider>
+    <App />
+   </CallListProvider>
   </React.StrictMode>,
 )

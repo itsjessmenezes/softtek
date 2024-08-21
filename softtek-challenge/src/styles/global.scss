@@ -1,0 +1,240 @@
+@import './commons';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --status-gray: #9c9c9c;
+  --status-yellow: #EDEAA3;
+  --status-red: #EDA3A3;
+  --status-green: #A4EDA3;
+}
+
+body {
+  background-color: #f5f5f5;
+}
+
+$colors: (
+  gray-font-900: #464C53,
+  gray-font-700: #677484,
+  gray-font-200: #A7B0BA,
+
+  gray-font-logo: #545960,
+
+  purple-font-500: #5F6F9D,
+  purple-font-700: #3635a2,
+
+  gray-500: #6978A3,
+  gray-200: #E1E9FF,
+  gray-100: #C0C7DF,
+  gray-50: #E9EDFB,
+  light-gray: #EFF2F8,
+
+  purple-gradient: #6F6CF6,
+  pink-gradient: #A257F7,
+
+  light-green: #D2FFD7,
+  green: #53C85F,
+  white: #fff,
+  none: none,
+);
+
+$font: (
+  bold: bold,
+  weight-600: 600,
+  weight-700: 700,
+  weight-800: 800,
+  weight-900: 900,
+  size-12: 0.75rem,
+  size-14: 0.875,
+  size-16: 1rem,
+  size-18: 1.125,
+);
+
+#root {
+
+  background-color: var(--light-gray);
+  width: 100%;
+  height: 100%;
+  
+  font-family: "Inter", sans-serif;
+}
+
+@mixin color-classes($map) {
+  @each $name, $color in $map {
+    .color--#{$name} {
+      color: $color;
+    }
+    .background--#{$name} {
+      background-color: $color;
+    }
+  }
+}
+
+@mixin fonts($map) {
+  @each $name, $font in $map {
+    .size--#{$name} {
+      font-size: $font;
+    }
+    .weight--#{$name} {
+      font-weight: $font;
+    }
+  }
+}
+
+@include fonts($font);
+
+@include color-classes($colors);
+
+.divisor {
+  height: 1px;
+  width: 98%;
+  margin: 0 auto;
+}
+
+.bg-none {
+  background: none;
+}
+
+.full {
+  width: 100%;
+}
+
+.status-gray {
+  background-color: var(--status-gray);
+}
+.status-yellow {
+  background-color: var(--status-yellow);
+}
+.status-red {
+  background-color: var(--status-red);
+}
+.status-green {
+  background-color: var(--status-green);
+}
+
+.full-width {
+  width: 100%;
+}
+
+.margin {
+  &.top-5 {
+    margin-top: 5px;
+  }
+  &.top-10 {
+    margin-top: 10px;
+  }
+  &.top-20 {
+    margin-top: 20px;
+  }
+  &.bottom-5 {
+    margin-bottom: 5px;
+  }
+  &.bottom-10 {
+    margin-bottom: 10px;
+  }
+  &.bottom-20 {
+    margin-bottom: 20px;
+  }
+}
+
+.padding-10-0 {
+  padding: 10px 0;
+}
+.padding-10-20 {
+  padding: 10px 20px;
+}
+.padding-20-30 {
+  padding: 20px 30px;
+}
+
+.flex {
+  flex: 1;
+}
+.d-flex {
+  display: flex;
+
+
+  &.wrap {
+    flex-wrap: wrap;
+  }
+
+  &.column {
+    flex-direction: column;
+  }
+  
+  &.align-center {
+    align-items: center;
+  }
+
+  &.justify-center {
+    justify-content: center;
+  }
+
+  &.justify-between {
+    justify-content: space-between;
+  }
+
+  &.justify-evenly {
+    justify-content: space-evenly;
+  }
+
+  &.justify-end {
+    justify-content: flex-end;
+  }
+
+  &.gap-5 {
+    gap: 5px;
+  }
+
+  &.gap-10 {
+    gap: 10px;
+  }
+
+  &.gap-15 {
+    gap: 15px;
+  }
+
+  &.gap-20 {
+    gap: 20px;
+  }
+}
+
+.font {
+  &.align-start {
+    text-align: start;
+  }
+  &.align-center {
+    text-align: center;
+  }
+}
+
+.border {
+  &.radius-5 {
+    border-radius: 5px;
+  } 
+
+  &.radius-10 {
+    border-radius: 10px;
+  } 
+  &.bottom-2 {
+    border-bottom: 1px solid #A7B0BA;
+  }
+  
+  &.b-none {
+    border: none;
+  }
+
+  &.top-radius-5 {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
