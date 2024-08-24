@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import './style.css';
-import { color, toLocalDateString } from '../../utils/custom';
+import { color } from '../../utils/custom';
 import axios from "axios";
 import tableHead from './tableHead.json';
 import { useEffect, useState } from 'react';
@@ -48,7 +48,7 @@ export const Home = ({ setProtocol, setPage, }) => {
         ...newCall,
         protocol: {
           ...newCall.protocol,
-          create_date: toLocalDateString(new Date())
+          create_date: new Date().toISOString()
         },
       };
         const response = await axios.post('http://localhost:5000/api/call-list', updatedNewCall);

@@ -1,34 +1,34 @@
 [
   {
     "protocol": {
-      "id": "123023936",
-      "create_date": "2024-04-28T14:22"
+      "id": "123023934",
+      "create_date": "2024-04-26T10:12"
     },
     "client": {
-      "name": "Roberto Almeida",
-      "company_name": "Almeida & Associados",
+      "name": "Carlos Silva",
+      "company_name": "Tech Solutions",
       "document_type": "CNPJ",
-      "document_number": "06789012/0001-09",
+      "document_number": "05432198/0001-07",
       "address": {
-        "street": "Av Brasil",
-        "street_number": "999",
-        "state_code": "SP"
+        "street": "Rua das Flores",
+        "street_number": "120",
+        "state_code": "RJ"
       },
-      "phone": "(11) 9 1111-2233"
+      "phone": "(21) 9 8765-4321"
     },
     "status": "Aberto",
     "call_type": {
-      "title": "Erro",
-      "description": "Falha no sistema de contabilidade",
-      "suggestion": "Realizar uma análise detalhada do sistema de contabilidade para identificar e corrigir a falha que está gerando erros nos relatórios fiscais. Verificar se há atualizações ou patches disponíveis que possam resolver o problema."
+      "title": "Solicitação",
+      "description": "Requisição de suporte técnico",
+      "suggestion": ""
     },
     "contract": {
-      "renewal_contract": "2024-12-01T12:00",
-      "contract_type": "Anual",
-      "price": 6000
+      "renewal_contract": "2024-10-01T08:00",
+      "contract_type": "Semestral",
+      "price": 2500
     },
     "priority": "MEDIA",
-    "description": "Problema no sistema de contabilidade causando falhas ao gerar relatórios fiscais."
+    "description": "Cliente solicitou alteração no contrato"
   },
   {
     "protocol": {
@@ -64,32 +64,32 @@
   {
     "protocol": {
       "id": "123023936",
-      "create_date": "2024-04-26T10:12"
+      "create_date": "2024-04-28T14:22"
     },
     "client": {
-      "name": "Carlos Silva",
-      "company_name": "Tech Solutions",
+      "name": "Roberto Almeida",
+      "company_name": "Almeida & Associados",
       "document_type": "CNPJ",
-      "document_number": "05432198/0001-07",
+      "document_number": "06789012/0001-09",
       "address": {
-        "street": "Rua das Flores",
-        "street_number": "120",
-        "state_code": "RJ"
+        "street": "Av Brasil",
+        "street_number": "999",
+        "state_code": "SP"
       },
-      "phone": "(21) 9 8765-4321"
+      "phone": "(11) 9 1111-2233"
     },
     "status": "Aberto",
     "call_type": {
-      "title": "Solicitação",
-      "description": "Requisição de suporte técnico",
-      "suggestion": ""
+      "title": "Problema",
+      "description": "Falha no sistema de contabilidade",
+      "suggestion": "Realizar uma análise detalhada do sistema de contabilidade para identificar e corrigir a falha que está gerando erros nos relatórios fiscais. Verificar se há atualizações ou patches disponíveis que possam resolver o problema."
     },
     "contract": {
-      "renewal_contract": "2024-10-01T08:00",
-      "contract_type": "Semestral",
-      "price": 2500
+      "renewal_contract": "2024-12-01T12:00",
+      "contract_type": "Anual",
+      "price": 6000
     },
     "priority": "MEDIA",
-    "description": "Cliente solicitou alteração no contrato"
+    "description": "Problema no sistema de contabilidade causando falhas ao gerar relatórios fiscais."
   }
 ]

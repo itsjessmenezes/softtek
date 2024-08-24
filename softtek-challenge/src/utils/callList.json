@@ -328,7 +328,7 @@
     },
     "status": "Encerrado",
     "call_type": {
-      "title": "Erro",
+      "title": "Problema",
       "description": "Erro no módulo de relatórios",
       "suggestion": "Verificar o código-fonte do módulo de relatórios para identificar e corrigir o erro. Certificar-se de que todas as dependências do módulo estão atualizadas."
     },
