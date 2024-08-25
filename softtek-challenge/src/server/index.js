@@ -29,6 +29,7 @@ app.get('/api/call-list', (req, res) => res.json(callList));
 app.post('/api/call-list', (req, res) => {
     const data = req.body;
 
+
     if (!data) {
         return res.status(400).send('Dados da chamada não fornecidos');
     }
@@ -37,8 +38,11 @@ app.post('/api/call-list', (req, res) => {
     res.status(201).json(data);
 });
 
-app.post('/api/chat', async (req, res) => {
-    const { messages } = req.body;
+app.post('/api/chat/:protocolId', async (req, res) => {
+    const { messages: listMessages } = req.body;
+    const { protocolId } = req.params;
+
+    const messages = listMessages.find(item => item.id === Number(protocolId)).messages;
 
     try {
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
@@ -62,13 +66,40 @@ app.post('/api/chat', async (req, res) => {
 
         
         const messageContent = response.data.choices[0].message.content;
-        messageList = messageContent;
-    
-        res.json({ message: messageContent });
+        // const newMessageId = 123023937 + messageList.length;
+
+        messageList = listMessages;
+
+        const existsOpenProtocol = messageList.findIndex(msg => msg.id === Number(protocolId));
+
+        if(!existsOpenProtocol) {
+            messageList[existsOpenProtocol].messages = [...messageList[existsOpenProtocol].messages, { text: messageContent, sender: 'system' }]
+        } else {
+            messageList.push({
+                id: protocolId,
+                messages: [{ text: messageContent, sender: 'system' }]
+            });
+        }
+
+        res.json(messageList);
 
     } catch (error) {
         console.error('Error communicating with OpenAI:', error);
         res.status(500).send('Error communicating with OpenAI');
+    }
+});
+
+app.post('/api/operator/:protocolId', async (req, res) => {
+    const { messages } = req.body;
+
+    try {
+        messageList = messages;
+
+        res.json(messageList);
+
+    } catch (error) {
+        console.error('Error sending message:', error);
+        res.status(400).send('Error sending message');
     }
 });
 

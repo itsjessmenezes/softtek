@@ -1,8 +1,6 @@
 /* eslint-disable react/prop-types */
 import "./style.css";
 
-import { useNavigate } from "react-router-dom";
-
 import { LabelComponent } from "../../component/LabelComponent";
 import { KeyValueComponent } from "../../component/KeyValueComponent";
 
@@ -16,17 +14,16 @@ import robot from "../../assets/images/robot.svg";
 import brokeRobot from "../../assets/images/broke-robot.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ROLE_SYSTEM, ROLE_USER, STATUS_ORDER } from "../../utils/actions";
+import { ROLE_OPERATOR, ROLE_SYSTEM, ROLE_USER, STATUS_ORDER } from "../../utils/actions";
 import { sortedCallList } from "../../utils/functions";
 import { useCallList } from "../../context/useCallList";
 
-export const Calls = ({ protocol, setPage, messages, setMessages }) => {
+export const Calls = ({ protocol, setPage, messagesList, setMessagesList }) => {
   const { callList, setCallList } = useCallList();
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(true);
   const [loader, setLoader] = useState(false);
-  const navigate = useNavigate();
   const [height, setHeight] = useState(0);
   const findProtocol = callList.find((p) => p.protocol.id === protocol);
 
@@ -40,21 +37,52 @@ export const Calls = ({ protocol, setPage, messages, setMessages }) => {
   };
 
   const handleSendMessage = async () => {
+    const protocolId = findProtocol.protocol.id;
+    let newMessages = messagesList;
+
     if (input.trim()) {
-      setMessages([...messages, { text: input, sender: ROLE_USER }]);
-      setInput("");
+      const existsOpenProtocol = messagesList.length > 0 ? messagesList.findIndex(item => Number(item.id) === protocolId) : -1;
+      if(existsOpenProtocol !== -1) {
+
+        newMessages[existsOpenProtocol] = { ...messagesList[existsOpenProtocol], messages: [...messagesList[existsOpenProtocol].messages, { text: input, sender: ROLE_USER }]};
+      } else {
+        newMessages = [...messagesList, {id: protocolId, messages: [{ text: input, sender: ROLE_OPERATOR }]}];
+      }
+      
+      // setMessagesList(newMessages);
+      // setInput("");
+      // setLoader(true);
+
+      // try {
+      //   const result = await axios.post(
+      //     `http://localhost:5000/api/operator/${protocolId}`,
+      //     {
+      //       messages: newMessages,
+      //     },
+      //     {
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //       },
+      //     }
+      //   );
+
+      //   console.log({result})
+
+      //   setMessagesList(result.data);
+      // } catch (error) {
+      //   console.error("Error sending message:", error);
+      //   setMessagesList("Error communicating with server");
+      // }
+
+      setMessagesList(newMessages);
       setLoader(true);
+      setInput("");
 
       setTimeout(() => {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { text: "Resposta do cliente", sender: ROLE_SYSTEM },
-        ]);
+        newMessages[existsOpenProtocol] = { ...messagesList[existsOpenProtocol], messages: [...messagesList[existsOpenProtocol].messages, { text: "Resposta do cliente", sender: ROLE_SYSTEM }]};
+        setMessagesList(newMessages);
         setLoader(false);
 
-        setTimeout(() => {
-          navigate.push("/crm");
-        }, 2000);
       }, 1000);
     }
   };
@@ -65,10 +93,10 @@ export const Calls = ({ protocol, setPage, messages, setMessages }) => {
         "http://localhost:5000/api/messages-list"
       );
 
-      setMessages((prev) => [
+    setMessagesList((prev) => [
         ...prev,
-        { text: response.data, sender: ROLE_USER },
-      ]);
+        ...response.data,
+    ]);
     } catch (error) {
       console.error("Error fetching callList:", error);
     }
@@ -278,7 +306,9 @@ export const Calls = ({ protocol, setPage, messages, setMessages }) => {
         </div>
         <div className="chat-content">
           <div className="messages padding-10-20">
-            {messages.map((msg, index) => typeof msg.text !== 'object' && (
+            {messagesList.find(item => item.id === protocolInfo.id) && messagesList
+            .find(item => item.id === protocolInfo.id).messages
+            .map((msg, index) => typeof msg.text !== 'object' && (
               <div
                 key={index}
                 className={`message ${

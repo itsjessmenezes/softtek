@@ -4,19 +4,19 @@ import { Main } from './container';
 import { Chatbot } from './container/Chatbot';
 
 export const App = () => {
-    const [messages, setMessages] = useState([]);
+    const [messagesList, setMessagesList] = useState([]);
     return (
         <Router>
         <Routes>
           <Route path="/crm" element={
             <Main 
-            messages={messages}
-             setMessages={setMessages}
+            messagesList={messagesList}
+             setMessagesList={setMessagesList}
               />} />
           <Route path="/" element={
             <Chatbot 
-            messages={messages} 
-            setMessages={setMessages} 
+            messagesList={messagesList} 
+            setMessagesList={setMessagesList} 
             />
             } />
         </Routes>

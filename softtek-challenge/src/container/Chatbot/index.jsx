@@ -1,29 +1,30 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import axios from "axios";
-import { ROLE_SYSTEM, ROLE_USER } from "../../utils/actions";
+import { ROLE_USER } from "../../utils/actions";
 import bdClients from "../../utils/bdClients.json";
 import { useCallList } from "../../context/useCallList";
+import callList from '../../utils/callList.json';
 
 import './style.css';
 export const Chatbot = ({
-  messages,
-  setMessages,
+  messagesList,
+  setMessagesList,
 }) => {
     const { 
-        callList,
         setCallList,
     } = useCallList();
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [openChat, setOpenChat] = useState(false);
+  const [hasRedirectedToOperator, setHasRedirectedToOperator] = useState(false);
   const documentTypes = ["CPF", "CNPJ", "Nome da Empresa"];
   const serviceTypes = ["Cadastro", "Financeiro", "Suporte Técnico"];
   const [formValues, setFormValues] = useState({
-    clientName: "",
+    clientName: "test",
     document: {
       type: documentTypes[0],
-      value: "",
+      value: "farmacity",
     },
     service: {
       type: serviceTypes[0],
@@ -31,6 +32,7 @@ export const Chatbot = ({
   });
 
   const { clientName, document, service } = formValues;
+  const protocolId = 123023937 + callList.length;
   const verifyCompanyExists = bdClients.find(({ client }) => {
     if (document.type === "nome da empresa") {
       return (
@@ -63,96 +65,167 @@ export const Chatbot = ({
     try {
         const response = await axios.post('http://localhost:5000/api/call-list', newCall);
         setCallList(prev => ([...prev, response.data]))
-        console.log('Added to Call List:', response.data);
+
     } catch (error) {
         console.error('Error adding to call list:', error);
+    }
+  }
+
+  const sendMessageToOperator = async (newMessages) => {
+    try {
+      const result = await axios.post(
+        `http://localhost:5000/api/operator/${protocolId}`,
+        {
+          messages: newMessages,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+
+      const findConversation = result.data.find(item => item.id === Number(protocolId));
+      const { id, messages: responseMessages } = findConversation;
+      
+      const resultMessage = responseMessages[responseMessages.length - 1].text;
+      setMessagesList(result.data);
+
+      if (
+        (resultMessage.includes("redirec") &&
+          resultMessage.includes("atendente")) ||
+        (resultMessage.includes("transfi") &&
+          resultMessage.includes("atendim")) ||
+        (resultMessage.includes("encamin") &&
+          resultMessage.includes("atenden"))
+      ) {
+
+        if (verifyCompanyExists) {
+          const newCall = {
+              ...verifyCompanyExists,
+              protocol: {
+                id,
+                create_date: new Date().toISOString(),
+              },
+              client : {
+                  ...verifyCompanyExists.client,
+                  name: formValues.clientName
+              },
+              status: "Aberto",
+              call_type: {
+                title: "Erro",
+                description: "Falha no sistema de contabilidade",
+              },
+              priority: service.type === 'Cadastro' ? 'BAIXA' : service.type === 'Financeiro' ? 'MEDIA' : 'ALTA',
+              description:
+                "Problema no sistema de contabilidade causando falhas ao gerar relatórios fiscais.",
+            }
+
+            saveNewItem(newCall);
+        }
+
+        alert(
+          "Seu atendimento será redirecionado a um atendente. Por favor, aguarde."
+        );
+        setHasRedirectedToOperator(true);
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setMessagesList("Error communicating with server");
+    }
+  }
+  
+  const sendMessageToGPT = async (newMessages) => {
+    try {
+      const result = await axios.post(
+        `http://localhost:5000/api/chat/${protocolId}`,
+        {
+          messages: newMessages,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+
+      const findConversation = result.data.find(item => item.id === Number(protocolId));
+      const { id, messages: responseMessages } = findConversation;
+      
+      const resultMessage = responseMessages[responseMessages.length - 1].text;
+      setMessagesList(result.data);
+
+      if (
+        (resultMessage.includes("redirec") &&
+          resultMessage.includes("atendente")) ||
+        (resultMessage.includes("transfi") &&
+          resultMessage.includes("atendim")) ||
+        (resultMessage.includes("encamin") &&
+          resultMessage.includes("atenden"))
+      ) {
+
+        if (verifyCompanyExists) {
+          const newCall = {
+              ...verifyCompanyExists,
+              protocol: {
+                id,
+                create_date: new Date().toISOString(),
+              },
+              client : {
+                  ...verifyCompanyExists.client,
+                  name: formValues.clientName
+              },
+              status: "Aberto",
+              call_type: {
+                title: "Erro",
+                description: "Falha no sistema de contabilidade",
+              },
+              priority: service.type === 'Cadastro' ? 'BAIXA' : service.type === 'Financeiro' ? 'MEDIA' : 'ALTA',
+              description:
+                "Problema no sistema de contabilidade causando falhas ao gerar relatórios fiscais.",
+            }
+
+            saveNewItem(newCall);
+        }
+
+        alert(
+          "Seu atendimento será redirecionado a um atendente. Por favor, aguarde."
+        );
+        setHasRedirectedToOperator(true);
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setMessagesList("Error communicating with server");
     }
   }
 
 
   const handleSubmitGPT = async (event) => {
     event.preventDefault();
-
+    let newMessages = messagesList;
+   
     if (message.trim()) {
-      const newMessages = [...messages, { text: message, sender: ROLE_USER }];
-      setMessages(newMessages);
+      const existsOpenProtocol = messagesList.length > 0 ? messagesList.findIndex(item => Number(item.id) === protocolId) : -1;
+     
+      if(existsOpenProtocol !== -1) {
+        newMessages[existsOpenProtocol] = { ...messagesList[existsOpenProtocol], messages: [...messagesList[existsOpenProtocol].messages, { text: message, sender: ROLE_USER }]};
+      } else {
+        newMessages = [...messagesList, {id: protocolId, messages: [{ text: message, sender: ROLE_USER }]}];
+      }
+    }
+
+    if(hasRedirectedToOperator) {
+      sendMessageToOperator(newMessages);
+      return;
+    }
+
+      setMessagesList(newMessages);
       setMessage("");
       setLoading(true);
 
-      try {
-        const result = await axios.post(
-          "http://localhost:5000/api/chat",
-          {
-            messages: newMessages,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        setMessages((prev) => [
-          ...prev,
-          { sender: ROLE_SYSTEM, text: result.data.message },
-        ]);
-
-        const resultMessage = result.data.message;
-        if (
-          (resultMessage.includes("redirec") &&
-            resultMessage.includes("atendente")) ||
-          (resultMessage.includes("transfi") &&
-            resultMessage.includes("atendim")) ||
-          (resultMessage.includes("encamin") &&
-            resultMessage.includes("atenden"))
-        ) {
-
-          if (verifyCompanyExists) {
-            const newCall = {
-                ...verifyCompanyExists,
-                protocol: {
-                  id: 123023937 + callList.length,
-                  create_date: new Date().toISOString(),
-                },
-                client : {
-                    ...verifyCompanyExists.client,
-                    name: formValues.clientName
-                },
-                status: "Aberto",
-                call_type: {
-                  title: "Erro",
-                  description: "Falha no sistema de contabilidade",
-                },
-                priority: service.type === 'Cadastro' ? 'BAIXA' : service.type === 'Financeiro' ? 'MEDIA' : 'ALTA',
-                description:
-                  "Problema no sistema de contabilidade causando falhas ao gerar relatórios fiscais.",
-              }
-
-              saveNewItem(newCall);
-          }
-
-          setMessages([]);
-          setMessage("");
-          setOpenChat(false);
-          setFormValues({
-            clientName: "",
-            document: {
-              type: documentTypes[0],
-              value: "",
-            },
-            service: {
-              type: serviceTypes[0],
-            },
-          });
-          alert(
-            "Seu atendimento será redirecionado a um atendente. Por favor, aguarde."
-          );
-        }
-      } catch (error) {
-        console.error("Error sending message:", error);
-        setMessages("Error communicating with server");
-      }
-    }
+      sendMessageToGPT(newMessages);
 
     setLoading(false);
   };
@@ -254,7 +327,8 @@ export const Chatbot = ({
           <div className="chat-container background--white border radius-5">
       <div className="chat-content chat-content-chatbot">
         <div className="messages messages-chatbot padding-10-20">
-        {messages.map((msg, index) => (
+        {messagesList.length > 0 && messagesList.find(item => item.id === Number(protocolId))
+        .messages.map((msg, index) => (
           <div key={index} className={`message ${msg.sender}`}>
             {msg.text}
           </div>
