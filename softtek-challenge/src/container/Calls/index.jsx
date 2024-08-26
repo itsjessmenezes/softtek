@@ -264,7 +264,7 @@ export const Calls = ({ protocol, setPage, messagesList, setMessagesList }) => {
           <div className="divisor background--gray-font-200 margin bottom-20"></div>
 
           <section className="interactions-history padding-10-20">
-            <h3 className="margin bottom-20 color--gray-font-900">
+            <h3 className="margin bottom-10 color--gray-font-900">
               Histórico de Interações
             </h3>
             <div className="d-flex column align-center">
@@ -278,7 +278,7 @@ export const Calls = ({ protocol, setPage, messagesList, setMessagesList }) => {
               </h4>
             </div>
           </section>
-          <div className="divisor background--gray-font-200 margin bottom-20"></div>
+          {/* <div className="divisor background--gray-font-200 margin bottom-20"></div>
 
           <section className="suggestion padding-10-20">
               {call_type.suggestion ? (
@@ -293,7 +293,7 @@ export const Calls = ({ protocol, setPage, messagesList, setMessagesList }) => {
                 </div>
               )}
             <span className="color--gray-font-700">{call_type.suggestion}</span>
-          </section>
+          </section> */}
         </section>
       </section>
       <div

@@ -12,6 +12,9 @@ export const ChartCards = () => {
   const labels = ['Não encerrados', 'Encerrados'];
   const allLabels = ['Aberto', 'Em andamento', 'Em espera', 'Encerrado'];
 
+  console.log({callList, findCallServiceFromTodayOpenAndClose: findCallServiceFromTodayOpenAndClose(callList)});
+
+
 const table = [
   {
     title: TICKETS,

@@ -38,7 +38,58 @@ app.post('/api/call-list', (req, res) => {
     res.status(201).json(data);
 });
 
-app.post('/api/chat/:protocolId', async (req, res) => {
+app.post('/api/client-chat/:protocolId', async (req, res) => {
+    const { messages: listMessages } = req.body;
+    const { protocolId } = req.params;
+
+    const messages = listMessages.find(item => item.id === Number(protocolId)).messages;
+
+    try {
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+            model: 'gpt-4o',
+            messages: [
+                {
+                    "role":"system",
+                    "content": process.env.EXPORTED_CONTENT,
+                    },
+                    ...messages.map(msg => ({
+                        role: msg.sender.toLowerCase() === 'user' ? 'user' : 'system',
+                        content: msg.text
+                    }))
+            ],
+        }, {
+            headers: {
+                'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        
+        const messageContent = response.data.choices[0].message.content;
+        // const newMessageId = 123023937 + messageList.length;
+
+        messageList = listMessages;
+
+        const existsOpenProtocol = messageList.findIndex(msg => msg.id === Number(protocolId));
+
+        if(!existsOpenProtocol) {
+            messageList[existsOpenProtocol].messages = [...messageList[existsOpenProtocol].messages, { text: messageContent, sender: 'system' }]
+        } else {
+            messageList.push({
+                id: protocolId,
+                messages: [{ text: messageContent, sender: 'system' }]
+            });
+        }
+
+        res.json(messageList);
+
+    } catch (error) {
+        console.error('Error communicating with OpenAI:', error);
+        res.status(500).send('Error communicating with OpenAI');
+    }
+});
+
+app.post('/api/operator-chat/:protocolId', async (req, res) => {
     const { messages: listMessages } = req.body;
     const { protocolId } = req.params;
 

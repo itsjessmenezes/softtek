@@ -7,6 +7,7 @@ import { useCallList } from "../../context/useCallList";
 import callList from '../../utils/callList.json';
 
 import './style.css';
+import { toLocalDateString } from "../../utils/custom";
 export const Chatbot = ({
   messagesList,
   setMessagesList,
@@ -106,7 +107,7 @@ export const Chatbot = ({
               ...verifyCompanyExists,
               protocol: {
                 id,
-                create_date: new Date().toISOString(),
+                create_date: toLocalDateString(new Date),
               },
               client : {
                   ...verifyCompanyExists.client,
@@ -139,7 +140,7 @@ export const Chatbot = ({
   const sendMessageToGPT = async (newMessages) => {
     try {
       const result = await axios.post(
-        `http://localhost:5000/api/chat/${protocolId}`,
+        `http://localhost:5000/api/client-chat/${protocolId}`,
         {
           messages: newMessages,
         },
@@ -171,7 +172,7 @@ export const Chatbot = ({
               ...verifyCompanyExists,
               protocol: {
                 id,
-                create_date: new Date().toISOString(),
+                create_date: toLocalDateString(new Date),
               },
               client : {
                   ...verifyCompanyExists.client,

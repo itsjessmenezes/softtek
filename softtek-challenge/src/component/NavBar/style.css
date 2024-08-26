@@ -30,3 +30,77 @@ nav {
     color: var(--purple-font-500);
     font-weight: bold;
   }
+
+  .chat-operator-container {
+    margin-bottom: 10px;
+  }
+
+  .chat-operator-container > img {
+    cursor: pointer;
+  }
+
+  .chat-operator-content {
+    max-width: 25rem;
+    position: relative;
+  }
+
+  .chat-operator-content > .chat-operator-messages {
+    max-height: 35rem;
+    overflow-y: auto;
+  }
+
+  .chat-operator-messages::-webkit-scrollbar {
+    width: 12px;
+    border-radius: 2px;
+  }
+  
+  .chat-operator-messages::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .chat-operator-messages::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+    border: 3px solid #f1f1f1;
+  }
+  
+  .chat-operator-messages::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .chat-balloon {
+    background-color: white;
+    padding: 10px 20px;
+    color: gray;
+    font-style: italic;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+
+  .loading {
+    position: absolute;
+    bottom: 15%;
+    right: 7%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .loading {
+    width: 60px;
+    aspect-ratio: 4;
+    --_g: no-repeat radial-gradient(circle closest-side,#6F6CF6 90%,#0000);
+    background: 
+      var(--_g) 0%   50%,
+      var(--_g) 50%  50%,
+      var(--_g) 100% 50%;
+    background-size: calc(100%/3) 100%;
+    animation: l7 1s infinite linear;
+  }
+  @keyframes l7 {
+      33%{background-size:calc(100%/3) 0%  ,calc(100%/3) 100%,calc(100%/3) 100%}
+      50%{background-size:calc(100%/3) 100%,calc(100%/3) 0%  ,calc(100%/3) 100%}
+      66%{background-size:calc(100%/3) 100%,calc(100%/3) 100%,calc(100%/3) 0%  }
+  }

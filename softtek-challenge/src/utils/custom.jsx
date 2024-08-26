@@ -9,6 +9,8 @@ const isDateToday = (date) => {
   const providedDate = date.split('T')[0];
   const today = toLocalDateString(new Date());
 
+  console.log({providedDate, today})
+
   return providedDate === today;
 };
 
@@ -28,7 +30,9 @@ return [result.countOpened, result.countClosed]
 };
 
 export const findCallServiceFromTodayOpenAndClose = (callList) => {
-  const result = callList.filter(({ protocol }) => isDateToday(protocol.create_date))
+  const result = callList.filter(({ protocol }) => isDateToday(protocol.create_date));
+
+  console.log({result})
 
   return findCallServiceFromOpenAndClose(result);
 
