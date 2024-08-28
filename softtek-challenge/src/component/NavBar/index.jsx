@@ -130,83 +130,65 @@ export const NavBar = ({ page, setPage }) => {
       </div>
 
       <div className="footer">
-        <div className="chat-operator-container d-flex align-end gap-10">
-          <img
-            onClick={() => setIsChatOpen(!isChatOpen)}
-            src={robot}
-            alt="Robo IA"
-          />
-          {isChatOpen ? (
-            <div className="chat-operator-content">
-              <div className="chat-operator-messages padding-10-20">
-                {chatOperatorMessages.find((item) => item.id === operatorId) &&
-                  chatOperatorMessages
-                    .find((item) => item.id === operatorId)
-                    .messages.map(
-                      (msg, index) =>
-                        typeof msg.text !== "object" && (
-                          <div
-                            key={index}
-                            className={`message ${
-                              msg.sender === ROLE_SYSTEM
-                                ? "background--light-gray"
-                                : "background--gray-200"
-                            }`}
-                          >
-                            {msg.text}
-                          </div>
-                        )
-                    )}
+      {/* <div className="divisor background--gray-font-200 margin bottom-20"></div> */}
+        <div className="chat-gpt-operator">
+          <div className="chat-operator-container d-flex align-end gap-10">
+            <img
+              onClick={() => setIsChatOpen(!isChatOpen)}
+              src={robot}
+              alt="Robo IA"
+            />
+            {isChatOpen ? (
+              <div className="chat-operator-content">
+                <div className="chat-operator-messages padding-10-20">
+                  {chatOperatorMessages.find(
+                    (item) => item.id === operatorId
+                  ) &&
+                    chatOperatorMessages
+                      .find((item) => item.id === operatorId)
+                      .messages.map(
+                        (msg, index) =>
+                          typeof msg.text !== "object" && (
+                            <div
+                              key={index}
+                              className={`message ${
+                                msg.sender === ROLE_SYSTEM
+                                  ? "background--light-gray"
+                                  : "background--gray-200"
+                              }`}
+                            >
+                              {msg.text}
+                            </div>
+                          )
+                      )}
+                </div>
+                {loading && <div className="loading"></div>}
+                <div className="d-flex padding-10-20 border radius-5 gap-10">
+                  <input
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+                    placeholder="Digite uma mensagem..."
+                  />
+                  <button className="bg-none" onClick={handleSendMessage}>
+                    <img src={send} alt="Enviar" />
+                  </button>
+                </div>
               </div>
-              {loading && <div className="loading"></div>}
-              <div className="d-flex padding-10-20 border radius-5 gap-10">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-                  placeholder="Digite uma mensagem..."
-                />
-                <button className="bg-none" onClick={handleSendMessage}>
-                  <img src={send} alt="Enviar" />
-                </button>
-              </div>
-            </div>
-          ) : (
-            //     <div className="chat-box">
-            //       <div className="messages">
-            //         {chatOperatorMessages.length > 0
-            //         && chatOperatorMessages
-            //         .find(item => item.id === operatorId)
-            // .messages.map((msg, index) => (
-            //           <div key={index} className="message">
-            //             {msg}
-            //           </div>
-            //         ))}
-            //       </div>
-            //       <form onSubmit={handleSubmit}>
-            //         <input
-            //           type="text"
-            //           value={input}
-            //           onChange={(e) => setInput(e.target.value)}
-            //           placeholder="Digite sua mensagem..."
-            //         />
-            //         <button type="submit">Enviar</button>
-            //       </form>
-            //     </div>
-            <ChatBalloon onClick={() => setIsChatOpen(!isChatOpen)} />
-          )}
+            ) : (
+              <ChatBalloon onClick={() => setIsChatOpen(!isChatOpen)} />
+            )}
+          </div>
         </div>
-        <div className="divisor background--gray-font-200 margin bottom-20"></div>
-
-        <ul>
+        {/* <ul>
           {navFooterOptions.map(({ title, img }) => (
             <li key={title}>
               <img src={img} alt={title} />
               <span>{title}</span>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </div>
     </nav>
   );

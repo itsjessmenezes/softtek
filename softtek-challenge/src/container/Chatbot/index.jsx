@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import axios from "axios";
-import { ROLE_USER } from "../../utils/actions";
+import { ROLE_SYSTEM, ROLE_USER } from "../../utils/actions";
 import bdClients from "../../utils/bdClients.json";
 import { useCallList } from "../../context/useCallList";
 import callList from '../../utils/callList.json';
@@ -18,7 +18,7 @@ export const Chatbot = ({
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [openChat, setOpenChat] = useState(false);
-  const [hasRedirectedToOperator, setHasRedirectedToOperator] = useState(false);
+  // const [hasRedirectedToOperator, setHasRedirectedToOperator] = useState(false);
   const documentTypes = ["CPF", "CNPJ", "Nome da Empresa"];
   const serviceTypes = ["Cadastro", "Financeiro", "Suporte Técnico"];
   const [formValues, setFormValues] = useState({
@@ -33,7 +33,7 @@ export const Chatbot = ({
   });
 
   const { clientName, document, service } = formValues;
-  const protocolId = 123023937 + callList.length;
+  const protocolId = 123023926 + callList.length;
   const verifyCompanyExists = bdClients.find(({ client }) => {
     if (document.type === "nome da empresa") {
       return (
@@ -72,12 +72,17 @@ export const Chatbot = ({
     }
   }
 
-  const sendMessageToOperator = async (newMessages) => {
+  const constructNewCall = async (newCall) => {
     try {
       const result = await axios.post(
-        `http://localhost:5000/api/operator/${protocolId}`,
+        `http://localhost:5000/api/gpt`,
         {
-          messages: newMessages,
+          conversation: messagesList,
+          call_type: {
+            title: "",
+            description: "",
+            suggestion: ""
+          },
         },
         {
           headers: {
@@ -86,56 +91,111 @@ export const Chatbot = ({
         }
       );
 
+      console.log('retorno gpt', result.data);
 
-      const findConversation = result.data.find(item => item.id === Number(protocolId));
-      const { id, messages: responseMessages } = findConversation;
-      
-      const resultMessage = responseMessages[responseMessages.length - 1].text;
-      setMessagesList(result.data);
+      const findInitialObject = result.data.indexOf('{');
+      const findFinalObject = result.data.indexOf('}');
 
-      if (
-        (resultMessage.includes("redirec") &&
-          resultMessage.includes("atendente")) ||
-        (resultMessage.includes("transfi") &&
-          resultMessage.includes("atendim")) ||
-        (resultMessage.includes("encamin") &&
-          resultMessage.includes("atenden"))
-      ) {
+      const parseToObject = JSON.parse(result.data.slice(findInitialObject, findFinalObject + 1));
 
-        if (verifyCompanyExists) {
-          const newCall = {
-              ...verifyCompanyExists,
-              protocol: {
-                id,
-                create_date: toLocalDateString(new Date),
-              },
-              client : {
-                  ...verifyCompanyExists.client,
-                  name: formValues.clientName
-              },
-              status: "Aberto",
-              call_type: {
-                title: "Erro",
-                description: "Falha no sistema de contabilidade",
-              },
-              priority: service.type === 'Cadastro' ? 'BAIXA' : service.type === 'Financeiro' ? 'MEDIA' : 'ALTA',
-              description:
-                "Problema no sistema de contabilidade causando falhas ao gerar relatórios fiscais.",
-            }
-
-            saveNewItem(newCall);
-        }
-
-        alert(
-          "Seu atendimento será redirecionado a um atendente. Por favor, aguarde."
-        );
-        setHasRedirectedToOperator(true);
+      const newObject = {
+        ...newCall,
+        call_type: parseToObject
       }
-    } catch (error) {
-      console.error("Error sending message:", error);
-      setMessagesList("Error communicating with server");
-    }
+
+      saveNewItem(newObject);
+      
+  } catch (error) {
+    console.error("Error sending message:", error);
+    setMessagesList("Error communicating with server");
   }
+}
+
+  // const sendMessageToOperator = async (newMessages) => {
+  //   try {
+  //     const result = await axios.post(
+  //       `http://localhost:5000/api/operator/${protocolId}`,
+  //       {
+  //         messages: newMessages,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+
+
+  //     const findConversation = result.data.find(item => item.id === Number(protocolId));
+  //     const { id, messages: responseMessages } = findConversation;
+      
+  //     const resultMessage = responseMessages[responseMessages.length - 1].text;
+  //     setMessagesList(result.data);
+
+  //     if (
+  //       (resultMessage.includes("redirec") &&
+  //         resultMessage.includes("atendente")) ||
+  //       (resultMessage.includes("transfi") &&
+  //         resultMessage.includes("atendim")) ||
+  //       (resultMessage.includes("encamin") &&
+  //         resultMessage.includes("atenden"))
+  //     ) {
+        
+  //       console.log({verifyCompanyExists})
+
+  //       let newCall;
+  //       if (verifyCompanyExists) {
+  //         newCall = {
+  //             ...verifyCompanyExists,
+  //             protocol: {
+  //               id,
+  //               create_date: toLocalDateString(new Date),
+  //             },
+  //             client : {
+  //                 ...verifyCompanyExists.client,
+  //                 name: formValues.clientName
+  //             },
+  //             status: "Aberto",
+  //             call_type: {
+  //               title: "Erro",
+  //               description: "Falha no sistema de contabilidade",
+  //             },
+  //             priority: service.type === 'Cadastro' ? 'BAIXA' : service.type === 'Financeiro' ? 'MEDIA' : 'ALTA',
+  //             suggestion: "",
+  //           }
+
+  //           console.log('caiu no verifyCompanyExists')
+
+  //           constructNewCall(newCall);
+
+  //           // saveNewItem(newCall);
+  //       }
+
+  //       const script = `Você é um assistente que ajuda a modificar objetos com base em conversas.
+  //                       A seguir está a descrição de um objeto. Modifique os campos title e description e suggestion com base na conversa fornecida.
+  //                       O campo title deverá ser uma das oçoes a seguir: Problema, Requisição, Mudança, Reclamação ou Solicitação.
+  //                       Descrição original do objeto: ${newCall}.
+  //                       Mensages para a analise da conversa: ${messagesList}`
+
+  //       console.log({script});
+
+
+        
+
+  //       // const script = `dlkadsajlafa ${messagesList}`
+  //       // criar um novo endpoint 
+  //       // enviar uma comando para que o gpt popule o objeto e retorne somente ele na mensagem "baseado nestas mensagens popule o objeto abaixo"
+  //       // coletamos a resposta e salvamos o chamado
+  //       alert(
+  //         "Seu atendimento será redirecionado a um atendente. Por favor, aguarde."
+  //       );
+  //       setHasRedirectedToOperator(true);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error sending message:", error);
+  //     setMessagesList("Error communicating with server");
+  //   }
+  // }
   
   const sendMessageToGPT = async (newMessages) => {
     try {
@@ -157,6 +217,7 @@ export const Chatbot = ({
       
       const resultMessage = responseMessages[responseMessages.length - 1].text;
       setMessagesList(result.data);
+      setLoading(false);
 
       if (
         (resultMessage.includes("redirec") &&
@@ -179,26 +240,19 @@ export const Chatbot = ({
                   name: formValues.clientName
               },
               status: "Aberto",
-              call_type: {
-                title: "Erro",
-                description: "Falha no sistema de contabilidade",
-              },
               priority: service.type === 'Cadastro' ? 'BAIXA' : service.type === 'Financeiro' ? 'MEDIA' : 'ALTA',
-              description:
-                "Problema no sistema de contabilidade causando falhas ao gerar relatórios fiscais.",
             }
 
-            saveNewItem(newCall);
+            constructNewCall(newCall)
         }
 
         alert(
           "Seu atendimento será redirecionado a um atendente. Por favor, aguarde."
         );
-        setHasRedirectedToOperator(true);
+        // setHasRedirectedToOperator(true);
       }
     } catch (error) {
       console.error("Error sending message:", error);
-      setMessagesList("Error communicating with server");
     }
   }
 
@@ -206,6 +260,7 @@ export const Chatbot = ({
   const handleSubmitGPT = async (event) => {
     event.preventDefault();
     let newMessages = messagesList;
+    setLoading(true);
    
     if (message.trim()) {
       const existsOpenProtocol = messagesList.length > 0 ? messagesList.findIndex(item => Number(item.id) === protocolId) : -1;
@@ -217,18 +272,15 @@ export const Chatbot = ({
       }
     }
 
-    if(hasRedirectedToOperator) {
-      sendMessageToOperator(newMessages);
-      return;
-    }
-
-      setMessagesList(newMessages);
+    
+    setMessagesList(newMessages);
       setMessage("");
-      setLoading(true);
 
+      // if(hasRedirectedToOperator) {
+      //   sendMessageToOperator(newMessages);
+      //   return;
+      // }
       sendMessageToGPT(newMessages);
-
-    setLoading(false);
   };
 
   return !openChat ? (
@@ -330,7 +382,13 @@ export const Chatbot = ({
         <div className="messages messages-chatbot padding-10-20">
         {messagesList.length > 0 && messagesList.find(item => item.id === Number(protocolId))
         .messages.map((msg, index) => (
-          <div key={index} className={`message ${msg.sender}`}>
+          <div key={index} 
+          className={`message ${
+            msg.sender === ROLE_SYSTEM
+              ? "background--light-gray"
+              : "background--gray-200"
+          }`}
+          >
             {msg.text}
           </div>
         ))}

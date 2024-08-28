@@ -20,7 +20,7 @@
     "call_type": {
       "title": "Solicitação",
       "description": "Requisição de suporte técnico",
-      "suggestion": ""
+      "suggestion": "Cliente solicitou alteração no contrato"
     },
     "contract": {
       "renewal_contract": "2024-10-01T08:00",
@@ -28,7 +28,7 @@
       "price": 2500
     },
     "priority": "MEDIA",
-    "description": "Cliente solicitou alteração no contrato"
+    "description": ""
   },
   {
     "protocol": {
