@@ -150,7 +150,7 @@ app.post("/api/operator-chat/:protocolId", async (req, res) => {
         messages: [
           {
             role: "system",
-            content: process.env.EXPORTED_CONTENT,
+            content: process.env.SCRIPT_HELP_OPERATOR,
           },
           ...messages.map((msg) => ({
             role: msg.sender.toLowerCase() === "user" ? "user" : "system",
