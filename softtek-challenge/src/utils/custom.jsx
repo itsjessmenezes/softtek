@@ -28,7 +28,7 @@ return [result.countOpened, result.countClosed]
 };
 
 export const findCallServiceFromTodayOpenAndClose = (callList) => {
-  const result = callList.filter(({ protocol }) => isDateToday(protocol.create_date))
+  const result = callList.filter(({ protocol }) => isDateToday(protocol.create_date));
 
   return findCallServiceFromOpenAndClose(result);
 

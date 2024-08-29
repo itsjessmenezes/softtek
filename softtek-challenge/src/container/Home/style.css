@@ -74,3 +74,43 @@ main {
     font-size: .8em;
     font-weight: bold;
 }
+
+
+.tooltip-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.tooltip-bubble {
+  visibility: visible;
+  width: 200px;
+  background-color: white;
+  color: #677484;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  font-size: 14px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s;
+  white-space: pre-wrap;
+}
+
+.tooltip-container:hover .tooltip-bubble {
+  opacity: 1;
+}
+
+.tooltip-bubble::after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}

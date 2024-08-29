@@ -7,7 +7,7 @@ import { ChartCards } from "../component/ChartCards";
 import { Home } from "./Home";
 import { Calls } from "./Calls";
 
-export const Main = ({ messages, setMessages }) => {
+export const Main = ({ messagesList, setMessagesList }) => {
   const [page, setPage] = useState(0);
   const [protocol, setProtocol] = useState();
 
@@ -28,8 +28,8 @@ export const Main = ({ messages, setMessages }) => {
           <Calls
             protocol={protocol}
             setPage={setPage}
-            messages={messages}
-            setMessages={setMessages}
+            messagesList={messagesList}
+            setMessagesList={setMessagesList}
           />
         )}
       </main>

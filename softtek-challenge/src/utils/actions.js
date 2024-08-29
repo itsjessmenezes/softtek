@@ -25,3 +25,4 @@ export const PRIORITY_ORDER = [HIGH, MEDIUM, LOW];
 
 export const ROLE_USER = 'user';
 export const ROLE_SYSTEM = 'system';
+export const ROLE_OPERATOR = 'operator';
