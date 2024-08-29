@@ -23,6 +23,7 @@ A aplicação possui dois principais caminhos de acesso:
      - **Home:** Lista de todos os chamados com opções de visualização.
        - [Tela Home](https://github.com/user-attachments/assets/66ac6210-cec4-4bee-acb6-cf30ac9e0bd8) ***(Preview)***
      - **Gráficos e Status dos Chamados:** Cards com gráficos mostrando o status de cada chamado.
+     - **Navbar com IA para auxiliar o atendente durante os chamados
      - **Tela de Chamados:** Detalhes do chamado selecionado, incluindo informações do contrato do cliente, dados do cliente que entrou em contato e um chat lateral para comunicação contínua.
        - [Tela de Chamado](https://github.com/user-attachments/assets/f92b40a7-bf86-409c-bb90-acb5cb8dbc59) ***(Preview)***
      - **Sugestão de Solução pelo GPT:** Sugestões de solução geradas pelo GPT para auxiliar o atendente na resolução dos problemas.
