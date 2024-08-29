@@ -22,10 +22,10 @@ export const Chatbot = ({
   const documentTypes = ["CPF", "CNPJ", "Nome da Empresa"];
   const serviceTypes = ["Cadastro", "Financeiro", "Suporte Técnico"];
   const [formValues, setFormValues] = useState({
-    clientName: "test",
+    clientName: "",
     document: {
       type: documentTypes[0],
-      value: "farmacity",
+      value: "",
     },
     service: {
       type: serviceTypes[0],
@@ -41,8 +41,8 @@ export const Chatbot = ({
       );
     }
     return (
-      client.document_type === document.type &&
-      client.document_number === document.value
+      client.document_type.toLowerCase() === document.type.toLowerCase() &&
+      client.document_number.replace(/\D/g, "") === document.value
     );
   });
 
