@@ -1,6 +1,6 @@
 # 🚀 FIAP Engineers
 
-Bem-vindo ao **FIAP Engineers**! Este é um MVP de um CRM desenvolvido em React e Node.js, que integra o front-end e o back-end em uma única aplicação. Este README fornece uma visão geral de como configurar e executar a aplicação, bem como uma descrição das principais funcionalidades.
+Bem-vindo ao **FIAP Engineers**! Este é um MVP de um CRM desenvolvido para a Softtek utilizando React e Node.js, que integra o front-end e o back-end em uma única aplicação. Este README fornece uma visão geral de como configurar e executar a aplicação, bem como uma descrição das principais funcionalidades.
 
 ## 🌟 Visão Geral
 
