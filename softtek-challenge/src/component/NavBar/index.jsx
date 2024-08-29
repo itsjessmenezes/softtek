@@ -5,8 +5,6 @@ import homeSelected from "../../assets/images/home-selected.svg";
 import headset from "../../assets/images/headset.svg";
 import headsetSelected from "../../assets/images/headset-selected.svg";
 
-import config from "../../assets/images/config.svg";
-import help from "../../assets/images/help.svg";
 import robot from "../../assets/images/robot.svg";
 import send from "../../assets/images/send.svg";
 
@@ -36,17 +34,6 @@ export const NavBar = ({ page, setPage }) => {
       img: headset,
       imgSelected: headsetSelected,
       title: "Chamados",
-    },
-  ];
-
-  const navFooterOptions = [
-    {
-      img: config,
-      title: "Configurações",
-    },
-    {
-      img: help,
-      title: "Ajuda",
     },
   ];
 
@@ -130,7 +117,6 @@ export const NavBar = ({ page, setPage }) => {
       </div>
 
       <div className="footer">
-      {/* <div className="divisor background--gray-font-200 margin bottom-20"></div> */}
         <div className="chat-gpt-operator">
           <div className="chat-operator-container d-flex align-end gap-10">
             <img
@@ -168,7 +154,7 @@ export const NavBar = ({ page, setPage }) => {
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+                    onKeyPress={(e) => e.key === "Enter" && handleSendMessage(e)}
                     placeholder="Digite uma mensagem..."
                   />
                   <button className="bg-none" onClick={handleSendMessage}>
@@ -181,14 +167,6 @@ export const NavBar = ({ page, setPage }) => {
             )}
           </div>
         </div>
-        {/* <ul>
-          {navFooterOptions.map(({ title, img }) => (
-            <li key={title}>
-              <img src={img} alt={title} />
-              <span>{title}</span>
-            </li>
-          ))}
-        </ul> */}
       </div>
     </nav>
   );

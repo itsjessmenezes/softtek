@@ -91,8 +91,6 @@ export const Chatbot = ({
         }
       );
 
-      console.log('retorno gpt', result.data);
-
       const findInitialObject = result.data.indexOf('{');
       const findFinalObject = result.data.indexOf('}');
 
@@ -100,6 +98,10 @@ export const Chatbot = ({
 
       const newObject = {
         ...newCall,
+        protocol: {
+          ...newCall.protocol,
+          create_date: toLocalDateString(new Date),
+        },
         call_type: parseToObject
       }
 
@@ -111,92 +113,6 @@ export const Chatbot = ({
   }
 }
 
-  // const sendMessageToOperator = async (newMessages) => {
-  //   try {
-  //     const result = await axios.post(
-  //       `http://localhost:5000/api/operator/${protocolId}`,
-  //       {
-  //         messages: newMessages,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-
-
-  //     const findConversation = result.data.find(item => item.id === Number(protocolId));
-  //     const { id, messages: responseMessages } = findConversation;
-      
-  //     const resultMessage = responseMessages[responseMessages.length - 1].text;
-  //     setMessagesList(result.data);
-
-  //     if (
-  //       (resultMessage.includes("redirec") &&
-  //         resultMessage.includes("atendente")) ||
-  //       (resultMessage.includes("transfi") &&
-  //         resultMessage.includes("atendim")) ||
-  //       (resultMessage.includes("encamin") &&
-  //         resultMessage.includes("atenden"))
-  //     ) {
-        
-  //       console.log({verifyCompanyExists})
-
-  //       let newCall;
-  //       if (verifyCompanyExists) {
-  //         newCall = {
-  //             ...verifyCompanyExists,
-  //             protocol: {
-  //               id,
-  //               create_date: toLocalDateString(new Date),
-  //             },
-  //             client : {
-  //                 ...verifyCompanyExists.client,
-  //                 name: formValues.clientName
-  //             },
-  //             status: "Aberto",
-  //             call_type: {
-  //               title: "Erro",
-  //               description: "Falha no sistema de contabilidade",
-  //             },
-  //             priority: service.type === 'Cadastro' ? 'BAIXA' : service.type === 'Financeiro' ? 'MEDIA' : 'ALTA',
-  //             suggestion: "",
-  //           }
-
-  //           console.log('caiu no verifyCompanyExists')
-
-  //           constructNewCall(newCall);
-
-  //           // saveNewItem(newCall);
-  //       }
-
-  //       const script = `Você é um assistente que ajuda a modificar objetos com base em conversas.
-  //                       A seguir está a descrição de um objeto. Modifique os campos title e description e suggestion com base na conversa fornecida.
-  //                       O campo title deverá ser uma das oçoes a seguir: Problema, Requisição, Mudança, Reclamação ou Solicitação.
-  //                       Descrição original do objeto: ${newCall}.
-  //                       Mensages para a analise da conversa: ${messagesList}`
-
-  //       console.log({script});
-
-
-        
-
-  //       // const script = `dlkadsajlafa ${messagesList}`
-  //       // criar um novo endpoint 
-  //       // enviar uma comando para que o gpt popule o objeto e retorne somente ele na mensagem "baseado nestas mensagens popule o objeto abaixo"
-  //       // coletamos a resposta e salvamos o chamado
-  //       alert(
-  //         "Seu atendimento será redirecionado a um atendente. Por favor, aguarde."
-  //       );
-  //       setHasRedirectedToOperator(true);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error sending message:", error);
-  //     setMessagesList("Error communicating with server");
-  //   }
-  // }
-  
   const sendMessageToGPT = async (newMessages) => {
     try {
       const result = await axios.post(
@@ -259,6 +175,7 @@ export const Chatbot = ({
 
   const handleSubmitGPT = async (event) => {
     event.preventDefault();
+
     let newMessages = messagesList;
     setLoading(true);
    
@@ -400,7 +317,7 @@ export const Chatbot = ({
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          onKeyPress={(e) => e.key === "Enter" && handleSubmitGPT()}
+          onKeyPress={(e) => e.key === "Enter" && handleSubmitGPT(e)}
           placeholder="Digite uma mensagem..."
         />
         <button className="background--purple-gradient" onClick={handleSubmitGPT}>Enviar</button>

@@ -19,16 +19,15 @@
     "status": "Em andamento",
     "call_type": {
       "title": "Problema",
-      "description": "Erro ao acessar o aplicativo",
-      "suggestion": "Verificar as configurações de autenticação e garantir que as credenciais estejam corretas. Se o problema persistir, reiniciar o aplicativo pode ajudar."
+      "description": "Erro ao acessar o aplicativo.",
+      "suggestion": "Verifique se a aplicação está atualizada. Se o problema persistir, reinicie o dispositivo e tente novamente."
     },
     "contract": {
       "renewal_contract": "2024-12-31T12:00",
       "contract_type": "Mensal",
       "price": 5000
     },
-    "priority": "ALTA",
-    "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+    "priority": "ALTA"
   },
   {
     "protocol": {
@@ -47,24 +46,23 @@
       },
       "phone": "(11) 9 9343-3409"
     },
-    "status": "Em andamento",
+    "status": "Em espera",
     "call_type": {
-      "title": "Requisição",
-      "description": "Erro ao acessar o aplicativo",
-      "suggestion": "Confirmar se o usuário está inserindo as credenciais corretas e se a conexão com a internet está estável. Verificar se há atualizações disponíveis para o aplicativo."
+      "title": "Solicitação",
+      "description": "Solicitação de alteração no contrato de serviço.",
+      "suggestion": "Confirme os detalhes da alteração e entre em contato com o suporte para ajustar o contrato conforme solicitado."
     },
     "contract": {
       "renewal_contract": "2024-12-31T12:00",
       "contract_type": "Anual",
       "price": 5000
     },
-    "priority": "MEDIA",
-    "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+    "priority": "MEDIA"
   },
   {
     "protocol": {
       "id": "123023925",
-      "create_date": "2024-04-25T11:03"
+      "create_date": "2024-04-25T11:13"
     },
     "client": {
       "name": "Joice Davila",
@@ -78,19 +76,18 @@
       },
       "phone": "(11) 9 9343-3409"
     },
-    "status": "Em andamento",
+    "status": "Encerrado",
     "call_type": {
-      "title": "Requisição",
-      "description": "Erro ao acessar o aplicativo",
-      "suggestion": "Verificar se o aplicativo está atualizado e realizar uma verificação de integridade dos arquivos do sistema. Tentar reiniciar o dispositivo pode ajudar."
+      "title": "Mudança",
+      "description": "Mudança no endereço de correspondência.",
+      "suggestion": "Atualize o endereço no sistema e verifique se todos os registros estão corretos."
     },
     "contract": {
       "renewal_contract": "2024-12-31T12:00",
       "contract_type": "Mensal",
       "price": 5000
     },
-    "priority": "MEDIA",
-    "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+    "priority": "BAIXA"
   },
   {
     "protocol": {
@@ -98,7 +95,7 @@
       "create_date": "2024-04-25T11:12"
     },
     "client": {
-      "name": "Maria Santos",
+      "name": "Roberto Lima",
       "company_name": "Café Aroma",
       "document_type": "CNPJ",
       "document_number": "91430651/0001-77",
@@ -111,17 +108,16 @@
     },
     "status": "Em andamento",
     "call_type": {
-      "title": "Mudança",
-      "description": "Erro ao acessar o aplicativo",
-      "suggestion": "Certificar-se de que todas as permissões necessárias para o aplicativo estejam concedidas e revisar se há problemas com a configuração do servidor."
+      "title": "Reclamação",
+      "description": "Reclamação sobre o atraso na entrega do serviço.",
+      "suggestion": "Verifique o status da entrega e forneça uma atualização ao cliente. Considere ajustar os prazos futuros para evitar problemas semelhantes."
     },
     "contract": {
       "renewal_contract": "2024-12-31T12:00",
       "contract_type": "Semestral",
       "price": 5000
     },
-    "priority": "MEDIA",
-    "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+    "priority": "ALTA"
   },
   {
     "protocol": {
@@ -140,19 +136,18 @@
       },
       "phone": "(11) 9 9343-3409"
     },
-    "status": "Em espera",
+    "status": "Em andamento",
     "call_type": {
-      "title": "Problema",
-      "description": "Erro ao acessar o aplicativo",
-      "suggestion": "Reiniciar o aplicativo e verificar se há mensagens de erro específicas que possam fornecer mais detalhes sobre o problema. Confirmar também se o servidor está operacional."
+      "title": "Requisição",
+      "description": "Requisição para atualização de dados cadastrais.",
+      "suggestion": "Confirme os dados atualizados e ajuste o registro no sistema. Envie uma confirmação ao cliente após a atualização."
     },
     "contract": {
       "renewal_contract": "2024-12-31T12:00",
       "contract_type": "Anual",
       "price": 5000
     },
-    "priority": "MEDIA",
-    "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+    "priority": "MEDIA"
   },
   {
     "protocol": {
@@ -160,7 +155,7 @@
       "create_date": "2024-04-25T09:51"
     },
     "client": {
-      "name": "Carlos Mendes",
+      "name": "Paulo Santos",
       "company_name": "Livraria Becco",
       "document_type": "CPF",
       "document_number": "45846031030",
@@ -174,16 +169,15 @@
     "status": "Em espera",
     "call_type": {
       "title": "Problema",
-      "description": "Erro ao acessar o aplicativo",
-      "suggestion": "Verificar se há erros de digitação na mensagem de erro. Confirmar se o sistema está atualizado e se há problemas conhecidos com o servidor."
+      "description": "Problema com o sistema de pagamentos.",
+      "suggestion": "Verifique as configurações do sistema de pagamento e garanta que as transações estejam sendo processadas corretamente."
     },
     "contract": {
       "renewal_contract": "2024-12-31T12:00",
       "contract_type": "Trimestral",
       "price": 5000
     },
-    "priority": "BAIXA",
-    "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+    "priority": "ALTA"
   },
   {
     "protocol": {
@@ -202,19 +196,18 @@
       },
       "phone": "(11) 9 9343-3409"
     },
-    "status": "Encerrado",
+    "status": "Em andamento",
     "call_type": {
-      "title": "Problema",
-      "description": "Erro ao acessar o aplicativo",
-      "suggestion": "Confirmar se o erro é recorrente e se há logs ou registros adicionais que possam ajudar na resolução. Verificar também a configuração do aplicativo para possíveis inconsistências."
+      "title": "Solicitação",
+      "description": "Solicitação para revisão do contrato.",
+      "suggestion": "Revise o contrato conforme solicitado e envie uma versão atualizada para o cliente."
     },
     "contract": {
       "renewal_contract": "2024-12-31T12:00",
       "contract_type": "Mensal",
       "price": 5000
     },
-    "priority": "BAIXA",
-    "description": "Usuário está recebendo um erro ao acessar o aplicativo de email. Mensagem de erro: Erro de autenticação"
+    "priority": "MEDIA"
   },
   {
     "protocol": {
@@ -222,7 +215,7 @@
       "create_date": "2024-04-29T15:44"
     },
     "client": {
-      "name": "Sofia Pereira",
+      "name": "Fernando Almeida",
       "company_name": "Pereira & Cia",
       "document_type": "CPF",
       "document_number": "987.654.321-00",
@@ -233,19 +226,18 @@
       },
       "phone": "(51) 9 8765-4321"
     },
-    "status": "Em andamento",
+    "status": "Encerrado",
     "call_type": {
-      "title": "Solicitação",
-      "description": "Atualização de informações cadastrais",
-      "suggestion": "Verificar se as informações cadastrais do cliente estão completas e corretas. Garantir que o processo de atualização esteja sendo seguido corretamente."
+      "title": "Mudança",
+      "description": "Mudança no endereço de cobrança.",
+      "suggestion": "Atualize o endereço de cobrança no sistema e envie uma confirmação ao cliente."
     },
     "contract": {
       "renewal_contract": "2024-11-15T09:00",
       "contract_type": "Mensal",
       "price": 500
     },
-    "priority": "BAIXA",
-    "description": "Cliente solicitou atualização de informações cadastrais na plataforma."
+    "priority": "BAIXA"
   },
   {
     "protocol": {
@@ -253,7 +245,7 @@
       "create_date": "2024-04-30T16:55"
     },
     "client": {
-      "name": "Marcos Oliveira",
+      "name": "Marcos Silva",
       "company_name": "Oliveira Engenharia",
       "document_type": "CNPJ",
       "document_number": "07890123/0001-10",
@@ -264,19 +256,18 @@
       },
       "phone": "(11) 9 2345-6789"
     },
-    "status": "Encerrado",
+    "status": "Em andamento",
     "call_type": {
-      "title": "Problema",
-      "description": "Instabilidade no servidor",
-      "suggestion": "Verificar os logs do servidor para identificar a causa da instabilidade. Reavaliar a configuração do servidor e considerar uma manutenção preventiva."
+      "title": "Reclamação",
+      "description": "Reclamação sobre o serviço prestado.",
+      "suggestion": "Entre em contato com o cliente para entender o problema e providencie uma solução adequada."
     },
     "contract": {
       "renewal_contract": "2024-09-01T08:00",
       "contract_type": "Semestral",
       "price": 3000
     },
-    "priority": "MEDIA",
-    "description": "Servidor apresentando instabilidade e dificuldades de acesso frequentes."
+    "priority": "ALTA"
   },
   {
     "protocol": {
@@ -284,7 +275,7 @@
       "create_date": "2024-05-01T08:20"
     },
     "client": {
-      "name": "Ana Souza",
+      "name": "Isabela Pereira",
       "company_name": "Souza & Filhos",
       "document_type": "CPF",
       "document_number": "456.789.123-45",
@@ -295,19 +286,18 @@
       },
       "phone": "(41) 9 5678-1234"
     },
-    "status": "Em espera",
+    "status": "Em andamento",
     "call_type": {
-      "title": "Reclamação",
-      "description": "Dificuldades na integração com o sistema",
-      "suggestion": "Rever as configurações de integração e verificar se as credenciais estão corretas. Consultar a documentação do sistema para solucionar problemas comuns de integração."
+      "title": "Problema",
+      "description": "Problema com a entrega do produto.",
+      "suggestion": "Verifique o status da entrega e entre em contato com a transportadora para resolver o problema."
     },
     "contract": {
       "renewal_contract": "2024-08-01T10:00",
       "contract_type": "Trimestral",
       "price": 1800
     },
-    "priority": "ALTA",
-    "description": "Cliente está enfrentando dificuldades na integração com o sistema de gestão."
+    "priority": "ALTA"
   },
   {
     "protocol": {
@@ -315,7 +305,7 @@
       "create_date": "2024-05-02T09:30"
     },
     "client": {
-      "name": "Felipe Martins",
+      "name": "Eduardo Lima",
       "company_name": "Martins & Co",
       "document_type": "CNPJ",
       "document_number": "08901234/0001-11",
@@ -326,18 +316,17 @@
       },
       "phone": "(21) 9 3456-7890"
     },
-    "status": "Encerrado",
+    "status": "Em espera",
     "call_type": {
-      "title": "Problema",
-      "description": "Erro no módulo de relatórios",
-      "suggestion": "Verificar o código-fonte do módulo de relatórios para identificar e corrigir o erro. Certificar-se de que todas as dependências do módulo estão atualizadas."
+      "title": "Requisição",
+      "description": "Requisição para revisão dos termos do contrato.",
+      "suggestion": "Revise os termos do contrato conforme solicitado e forneça uma resposta detalhada ao cliente."
     },
     "contract": {
       "renewal_contract": "2024-12-15T12:00",
       "contract_type": "Anual",
       "price": 5500
     },
-    "priority": "MEDIA",
-    "description": "Erro crítico no módulo de relatórios impactando a geração de relatórios financeiros."
+    "priority": "MEDIA"
   }
 ]

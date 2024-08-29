@@ -38,7 +38,9 @@ export const Calls = ({ protocol, setPage }) => {
   };
 
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = async (event) => {
+    event.preventDefault();
+
     if (input.trim()) {
       setOperatorToClientMessages([...operatorToClientMessages, { text: input, sender: ROLE_USER }]);
       setInput("");
@@ -54,84 +56,6 @@ export const Calls = ({ protocol, setPage }) => {
     }
   };
 
-/** Implementar resposta real time do cliente */
-  // const handleSendMessage = async () => {
-  //   const protocolId = findProtocol.protocol.id;
-  //   let newMessages = operatorToClientMessages;
-
-  //   if (input.trim()) {
-  //     const existsOpenProtocol = operatorToClientMessages.length > 0 ? operatorToClientMessages.findIndex(item => Number(item.id) === protocolId) : -1;
-  //     if(existsOpenProtocol !== -1) {
-  //       console.log({existsOpenProtocol})
-  //       newMessages[existsOpenProtocol] = { ...operatorToClientMessages[existsOpenProtocol], messages: [...operatorToClientMessages[existsOpenProtocol].messages, { text: input, sender: ROLE_USER }]};
-  //     } else {
-  //       newMessages = [...operatorToClientMessages, {id: protocolId, messages: [{ text: input, sender: ROLE_OPERATOR }]}];
-  //     }
-      
-  //     // setMessagesList(newMessages);
-  //     // setInput("");
-  //     // setLoader(true);
-
-  //     // try {
-  //     //   const result = await axios.post(
-  //     //     `http://localhost:5000/api/operator/${protocolId}`,
-  //     //     {
-  //     //       messages: newMessages,
-  //     //     },
-  //     //     {
-  //     //       headers: {
-  //     //         "Content-Type": "application/json",
-  //     //       },
-  //     //     }
-  //     //   );
-
-  //     //   console.log({result})
-
-  //     //   setMessagesList(result.data);
-  //     // } catch (error) {
-  //     //   console.error("Error sending message:", error);
-  //     //   setMessagesList("Error communicating with server");
-  //     // }
-
-  //     console.log({newMessages})
-
-  //     setOperatorToClientMessages(newMessages);
-  //     setLoader(true);
-  //     setInput("");
-
-  //     setTimeout(() => {
-  //       newMessages[existsOpenProtocol] = { 
-  //         ...operatorToClientMessages[existsOpenProtocol],
-  //         messages: [
-  //           ...operatorToClientMessages[existsOpenProtocol].messages,
-  //           { text: "Resposta do cliente", sender: ROLE_SYSTEM }
-  //         ]
-  //       };
-  //       setOperatorToClientMessages(newMessages);
-  //       setLoader(false);
-
-  //     }, 1000);
-  //   }
-  // };
-
-  // const fetchMessagens = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       "http://localhost:5000/api/messages-list"
-  //     );
-
-  //   setOperatorToClientMessages((prev) => [
-  //       ...prev,
-  //       ...response.data,
-  //   ]);
-  //   } catch (error) {
-  //     console.error("Error fetching callList:", error);
-  //   }
-  // };
-
-//   useEffect(() => {
-//     fetchMessagens();
-// }, []);
 
   useEffect(() => {
     let hideLoading;

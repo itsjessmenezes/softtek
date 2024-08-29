@@ -69,7 +69,15 @@ export const Home = ({ setProtocol, setPage }) => {
     setLoading(true);
     while (newCalls.length > 0) {
       const call = newCalls.shift();
-      saveNewItem(call);
+      const updateCall = {
+        ...call,
+        protocol: {
+          ...call.protocol,
+          create_date: toLocalDateString(new Date),
+        }
+      }
+
+      saveNewItem(updateCall);
     }
 
     setLoading(false);
