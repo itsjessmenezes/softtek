@@ -11,14 +11,16 @@ import send from "../../assets/images/send.svg";
 import "./style.css";
 import { useState } from "react";
 import { ROLE_SYSTEM, ROLE_USER } from "../../utils/actions";
+import { useCallList } from "../../context/useCallList";
 
-const ChatBalloon = ({ onClick }) => (
-  <div className="chat-balloon" onClick={onClick}>
+const ChatBalloon = ({ theme, onClick }) => (
+  <div className={`${theme === 'light' ? 'background--white' : 'background--gray-200'} chat-balloon`} onClick={onClick}>
     Como posso ajudá-lo?
   </div>
 );
 
 export const NavBar = ({ page, setPage }) => {
+  const { theme } = useCallList();
   const [input, setInput] = useState("");
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -91,9 +93,9 @@ export const NavBar = ({ page, setPage }) => {
   };
 
   return (
-    <nav className="background--white">
+    <nav className={theme === 'light' ? "background--white" : "background--dark"}>
       <div className="d-flex column align-center gap-10">
-        <h2 className="logo">FIAP Engineers</h2>
+        <h2 className={`${theme === 'light' ? '' : 'color--gray-font-700' } logo`}>FIAP Engineers</h2>
         <div className="divisor background--gray-font-200 margin bottom-20"></div>
         <ul className="d-flex column gap-10">
           {navOptions.map(({ title, img, imgSelected }) => (
@@ -101,7 +103,7 @@ export const NavBar = ({ page, setPage }) => {
               className={
                 page === (title === "Home" ? 0 : 1)
                   ? "selected color--purple-font-500"
-                  : ""
+                  : theme === 'light' ? '' : 'color--gray-font-700'
               }
               key={title}
               onClick={() => (title === "Home" ? setPage(0) : setPage(1))}
@@ -163,7 +165,7 @@ export const NavBar = ({ page, setPage }) => {
                 </div>
               </div>
             ) : (
-              <ChatBalloon onClick={() => setIsChatOpen(!isChatOpen)} />
+              <ChatBalloon theme={theme} onClick={() => setIsChatOpen(!isChatOpen)} />
             )}
           </div>
         </div>

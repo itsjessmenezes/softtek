@@ -1,11 +1,12 @@
 import notification from '../../assets/images/notification.svg';
+import { useCallList } from '../../context/useCallList';
 import './style.css';
 
 export const Header = () => {
-
+  const { theme } = useCallList();
 
     return (
-        <header className='background--white padding-10-20 border radius-5'>
+        <header className={`${theme === 'light' ? "background--white" : "background--dark"} padding-10-20 border radius-5`}>
         <div className="search-box">
           <input type="text" className='input-search' placeholder='Pesquisar' />
         </div>

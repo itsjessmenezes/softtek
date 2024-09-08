@@ -4,11 +4,6 @@ main {
   padding: 10px 20px;
 }
 
-
-.home-container {
-  display: flex;
-}
-
 .status {
   width: .5rem;
   height: .5rem;
@@ -35,7 +30,6 @@ main {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background: white;
   border-radius: 5px;
   padding: 10px 20px;
 
@@ -69,7 +63,6 @@ main {
   width: 20rem;
   flex-direction: column;
   margin: auto;
-  background-color: #fff;
 }
 
 .messages {
@@ -139,7 +132,6 @@ button {
   bottom: 12%;
   right: 7%;
   transform: translate(-50%, -50%);
-  background-color: #fff;
   padding: 10px;
   border-radius: 5px;
 }

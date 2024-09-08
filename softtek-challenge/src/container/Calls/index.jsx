@@ -19,7 +19,7 @@ import { sortedCallList } from "../../utils/functions";
 import { useCallList } from "../../context/useCallList";
 
 export const Calls = ({ protocol, setPage }) => {
-  const { callList, setCallList } = useCallList();
+  const { theme, callList, setCallList } = useCallList();
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(true);
@@ -29,6 +29,11 @@ export const Calls = ({ protocol, setPage }) => {
   const findProtocol = callList.find((p) => p.protocol.id === protocol);
 
   const handleOptionClick = (status, protocolId) => {
+    if(status === 'redirecionar') {
+      //enviar chamado para outro atendente
+      //remover chamado da lista
+    }
+
     const updateStatus = callList.map((item) =>
       item.protocol.id === protocolId ? { ...item, status: status.value } : item
     );
@@ -99,7 +104,7 @@ export const Calls = ({ protocol, setPage }) => {
   return (
     <section className="d-flex margin top-20 gap-10">
       <section className="call-info-container d-flex flex column gap-10">
-        <section className="background--white border radius-5 ">
+        <section className={`${theme === 'light' ? 'background--white' : 'background--dark'} border radius-5`}>
           <LabelComponent
             title={`N° Chamado: ${protocolInfo.id}`}
             keyValue={
@@ -113,7 +118,7 @@ export const Calls = ({ protocol, setPage }) => {
             }
             content={
               <div className="content-button d-flex column gap-10">
-                <div className="background--gray-500 d-flex padding-10-20 border radius-5 gap-10">
+                <div className={`${theme === 'light' ? 'background--gray-500' : 'background--purple-gradient'} d-flex padding-10-20 border radius-5 gap-10`}>
                   <button
                     className="close-call--btn bg-none d-flex align-center gap-10 border b-none color--white font weight--bold pointer"
                     onClick={() => setIsOptionsOpen(!isOptionsOpen)}
@@ -126,7 +131,7 @@ export const Calls = ({ protocol, setPage }) => {
                   </button>
                 </div>
                 {isOptionsOpen && (
-                  <ul className="dropdown-menu">
+                  <ul className={`${theme === 'light' ? 'background--white' : 'background--bg-dark'} dropdown-menu`}>
                     {STATUS_ORDER.map((item) => (
                       <div key={item.id} className="d-flex column gap-10">
                         <li
@@ -139,6 +144,9 @@ export const Calls = ({ protocol, setPage }) => {
                         <div className="divisor background--gray-font-200"></div>
                       </div>
                     ))}
+                    <li
+                    onClick={() => {}}
+                    >Redirecionar chamado</li>
                   </ul>
                 )}
               </div>
@@ -146,7 +154,7 @@ export const Calls = ({ protocol, setPage }) => {
           />
         </section>
 
-        <section className="background--white border radius-5">
+        <section className={`${theme === 'light' ? 'background--white' : 'background--dark'} border radius-5`}>
           <LabelComponent
             title={client.company_name}
             keyValue={
@@ -178,7 +186,7 @@ export const Calls = ({ protocol, setPage }) => {
           />
         </section>
 
-        <section className="background--white border radius-5">
+        <section className={`${theme === 'light' ? 'background--white' : 'background--dark'} border radius-5`}>
           <div className="margin bottom-20">
             <LabelComponent
               title="Plano de Suporte Técnico Premium"
@@ -215,7 +223,7 @@ export const Calls = ({ protocol, setPage }) => {
           <div className="divisor background--gray-font-200 margin bottom-20"></div>
 
           <section className="interactions-history padding-10-20">
-            <h3 className="margin bottom-20 color--gray-font-900">
+            <h3 className={`${theme === 'light' ? 'color--gray-font-900' : 'color--gray-font-200'} margin bottom-20`}>
               Histórico de Interações
             </h3>
             <div className="d-flex column align-center">
@@ -224,7 +232,7 @@ export const Calls = ({ protocol, setPage }) => {
                 src={notFound}
                 alt="Nenhum resultado encontrado"
               />
-              <h4 className="color--gray-font-900">
+              <h4 className={theme === 'light' ? 'color--gray-font-900' : 'color--gray-font-700'}>
                 Nenhum resultado encontrado
               </h4>
             </div>
@@ -248,14 +256,21 @@ export const Calls = ({ protocol, setPage }) => {
         </section>
       </section>
       <div
-        className="chat-container background--white border radius-5"
+        className={`${theme === 'light' ? 'background--white' : 'background--dark'} chat-container border radius-5`}
         style={{ height: `${height}px` }}
       >
-        <div className="header background--gray-500 color--white padding-10-20 border top-radius-5">
-          <h3>{client.name}</h3>
-          <span className="header-online">online</span>
+        <div className={`${theme === 'light' ? 'background--gray-500' : 'background--purple-gradient'} header d-flex color--white padding-10-20 border top-radius-5`}>
+         <div className="flex">
+         <h3>{client.name}</h3>
+         <span className="header-online">online</span>
+         </div>
+         {/* <div className="">
+          <button
+          className={`${theme === 'light' ? 'background--white' : 'background--dark'} color--purple-font-500 font weight--bold`}
+          >Redirecionar</button>
+         </div> */}
         </div>
-        <div className="chat-content">
+        <div className={`${theme === 'light' ? 'background--white' : 'background--dark'} chat-content`}>
           <div className="messages padding-10-20">
             {operatorToClientMessages.map((msg, index) => typeof msg.text !== 'object' && (
               <div
@@ -270,9 +285,10 @@ export const Calls = ({ protocol, setPage }) => {
               </div>
             ))}
           </div>
-          {loader && <div className="loading"></div>}
+          {loader && <div className={`${theme === 'light' ? 'background--white' : 'background--dark'} loading`}></div>}
           <div className="input-container d-flex padding-10-20 border radius-5 gap-10">
             <input
+            className={theme === 'light' ? 'background--white' : 'background--dark color--white'}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}

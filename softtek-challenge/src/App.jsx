@@ -12,6 +12,17 @@ export const App = () => {
           path="/crm"
           element={
             <Main
+              theme="light"
+              messagesList={messagesList}
+              setMessagesList={setMessagesList}
+            />
+          }
+        />
+        <Route
+          path="/crm-advanced"
+          element={
+            <Main
+              theme="dark"
               messagesList={messagesList}
               setMessagesList={setMessagesList}
             />
