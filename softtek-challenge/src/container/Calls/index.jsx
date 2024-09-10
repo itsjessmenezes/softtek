@@ -12,14 +12,14 @@ import arrowUp from "../../assets/images/arrow-up.svg";
 import send from "../../assets/images/send.svg";
 import robot from "../../assets/images/robot.svg";
 import brokeRobot from "../../assets/images/broke-robot.svg";
-// import axios from "axios";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { ROLE_SYSTEM, ROLE_USER, STATUS_ORDER } from "../../utils/actions";
 import { sortedCallList } from "../../utils/functions";
 import { useCallList } from "../../context/useCallList";
 
 export const Calls = ({ protocol, setPage }) => {
-  const { theme, callList, setCallList } = useCallList();
+  const { theme, callList, setCallList, advancedCallList, setAdvancedCallList } = useCallList();
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(true);
@@ -28,20 +28,46 @@ export const Calls = ({ protocol, setPage }) => {
   const [operatorToClientMessages, setOperatorToClientMessages] = useState([]);
   const findProtocol = callList.find((p) => p.protocol.id === protocol);
 
+  const saveNewItem = async (newCall) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/advanced-call-list`, newCall);
+
+        setAdvancedCallList(sortedCallList([...advancedCallList, response.data]));
+    } catch (error) {
+      console.error("Error adding to call list:", error);
+    }
+  };
+  
+  const deleteItem = async (protocolId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/call-list/${protocolId}`);
+
+      setCallList(response.data);
+    } catch  (error) {
+      console.error("Error deleting call list:", error);
+    }
+  }
+
   const handleOptionClick = (status, protocolId) => {
     if(status === 'redirecionar') {
-      //enviar chamado para outro atendente
-      //remover chamado da lista
+      deleteItem(protocolId);
+
+      const redirectedClient = callList.find(item => item.protocol.id === protocol);
+
+      saveNewItem(redirectedClient);
+      
+    } else {
+      const updateStatus = callList.map((item) =>
+        item.protocol.id === protocolId ? { ...item, status: status.value } : item
+      );
+  
+      setCallList(sortedCallList(updateStatus));
     }
 
-    const updateStatus = callList.map((item) =>
-      item.protocol.id === protocolId ? { ...item, status: status.value } : item
-    );
-
-    setCallList(sortedCallList(updateStatus));
     setPage(0);
   };
-
 
   const handleSendMessage = async (event) => {
     event.preventDefault();
@@ -145,7 +171,9 @@ export const Calls = ({ protocol, setPage }) => {
                       </div>
                     ))}
                     <li
-                    onClick={() => {}}
+                    onClick={() =>
+                            handleOptionClick('redirecionar', protocolInfo.id)
+                          }
                     >Redirecionar chamado</li>
                   </ul>
                 )}

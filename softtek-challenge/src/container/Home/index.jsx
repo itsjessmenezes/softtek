@@ -9,16 +9,38 @@ import { useCallList } from "../../context/useCallList";
 import newCalls from "../../utils/newCalls.json";
 import { TableComponent } from "../../component/TableComponent";
 
-export const Home = ({ setProtocol, setPage }) => {
-  const { theme, callList, setCallList, advancedCallList, setAdvancedCallList } = useCallList();
+export const Home = ({ setProtocol, setPage, list, setList }) => {
+  const { theme, callList, advancedCallList, setCallList, setAdvancedCallList} = useCallList();
   const [loading, setLoading] = useState(null);
   const [hasNewItens, setHasNewItens] = useState(true);
 
+  const fetchAdvancedCallList = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/advanced-call-list');
+      
+      if (response.data.length === list.length) return;
+
+      response.data.map((item) =>
+        setAdvancedCallList((prev) => {
+          const updatedList = [...prev, item];
+          const uniqueList = updatedList.filter(
+            (item, pos, self) =>
+              self.findIndex((t) => t?.protocol?.id === item?.protocol?.id) ===
+              pos
+          );
+          const sortedList = sortedCallList(uniqueList);
+          return sortedList;
+        })
+      );
+    } catch (error) {
+      console.error("Error fetching callList:", error);
+    }
+  };
   const fetchCallList = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/call-list");
-      if (response.data.length === callList.length) return;
-
+      const response = await axios.get('http://localhost:5000/api/call-list');
+      
+      if (response.data.length === list.length) return;
       response.data.map((item) =>
         setCallList((prev) => {
           const updatedList = [...prev, item];
@@ -36,7 +58,7 @@ export const Home = ({ setProtocol, setPage }) => {
     }
   };
 
-  const saveNewItem = async (newCall) => {
+  const saveNewItem = async (newCall, setList) => {
     try {
       const updatedNewCall = {
         ...newCall,
@@ -46,10 +68,10 @@ export const Home = ({ setProtocol, setPage }) => {
         },
       };
       const response = await axios.post(
-        "http://localhost:5000/api/call-list",
+        `http://localhost:5000/api/${theme === 'light' ? '' : 'advanced-'}call-list`,
         updatedNewCall
       );
-      setCallList((prev) => [...prev, response.data]);
+      setList((prev) => [...prev, response.data]);
     } catch (error) {
       console.error("Error adding to call list:", error);
     }
@@ -67,7 +89,7 @@ export const Home = ({ setProtocol, setPage }) => {
         }
       }
 
-      saveNewItem(updateCall);
+      saveNewItem(updateCall, setList);
     }
 
     setLoading(false);
@@ -75,14 +97,19 @@ export const Home = ({ setProtocol, setPage }) => {
   };
 
   useEffect(() => {
+    if(!theme) return;
+    if(theme === 'dark') return;
     setNewItens();
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
-    if (hasNewItens) return;
+    // if (hasNewItens) return;
     setLoading(true);
     const interval = setInterval(() => {
-      fetchCallList();
+      // console.log(location.pathname);
+
+        fetchCallList();
+        fetchAdvancedCallList();
 
       setLoading(false);
     }, 3000);
@@ -91,13 +118,23 @@ export const Home = ({ setProtocol, setPage }) => {
   }, [hasNewItens]);
 
   return (
-    <section className={`${theme === 'light' ? "background--white" : "background--dark"} d-flex align-center justify-center flex-grow padding-20-30 margin top-20 border radius-10`}>
+    <section className={`${theme === 'light' ? "background--white" : "background--dark"} d-flex align-center justify-center padding-20-30 margin top-20 border radius-10`}>
       {loading && <Loading />}
-      <TableComponent 
-        list={theme === 'light' ? callList : advancedCallList}
+      {theme === 'light' && (
+        <TableComponent 
+        list={callList}
         setPage={setPage}
         setProtocol={setProtocol}
       />
+      )}
+
+      {theme === 'dark' && (
+        <TableComponent 
+        list={advancedCallList}
+        setPage={setPage}
+        setProtocol={setProtocol}
+      />
+      )}
     </section>
   );
 };
