@@ -4,17 +4,12 @@ import axios from "axios";
 import { ROLE_SYSTEM, ROLE_USER } from "../../utils/actions";
 import bdClients from "../../utils/bdClients.json";
 import { useCallList } from "../../context/useCallList";
-import callList from '../../utils/callList.json';
+import callList from "../../utils/callList.json";
 
-import './style.css';
+import "./style.css";
 import { toLocalDateString } from "../../utils/custom";
-export const Chatbot = ({
-  messagesList,
-  setMessagesList,
-}) => {
-    const { 
-        setCallList,
-    } = useCallList();
+export const Chatbot = ({ messagesList, setMessagesList }) => {
+  const { setCallList } = useCallList();
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [openChat, setOpenChat] = useState(false);
@@ -36,9 +31,7 @@ export const Chatbot = ({
   const protocolId = 123023926 + callList.length;
   const verifyCompanyExists = bdClients.find(({ client }) => {
     if (document.type === "nome da empresa") {
-      return (
-        client.company_name.toLowerCase() === document.value.toLowerCase()
-      );
+      return client.company_name.toLowerCase() === document.value.toLowerCase();
     }
     return (
       client.document_type.toLowerCase() === document.type.toLowerCase() &&
@@ -48,7 +41,6 @@ export const Chatbot = ({
 
   const handleSubmitForm = (event) => {
     event.preventDefault();
-
 
     if (!verifyCompanyExists) {
       alert(
@@ -64,13 +56,15 @@ export const Chatbot = ({
 
   const saveNewItem = async (newCall) => {
     try {
-        const response = await axios.post('http://localhost:5000/api/call-list', newCall);
-        setCallList(prev => ([...prev, response.data]))
-
+      const response = await axios.post(
+        "http://localhost:5000/api/call-list",
+        newCall
+      );
+      setCallList((prev) => [...prev, response.data]);
     } catch (error) {
-        console.error('Error adding to call list:', error);
+      console.error("Error adding to call list:", error);
     }
-  }
+  };
 
   const constructNewCall = async (newCall) => {
     try {
@@ -81,7 +75,7 @@ export const Chatbot = ({
           call_type: {
             title: "",
             description: "",
-            suggestion: ""
+            suggestion: "",
           },
         },
         {
@@ -91,27 +85,28 @@ export const Chatbot = ({
         }
       );
 
-      const findInitialObject = result.data.indexOf('{');
-      const findFinalObject = result.data.indexOf('}');
+      const findInitialObject = result.data.indexOf("{");
+      const findFinalObject = result.data.indexOf("}");
 
-      const parseToObject = JSON.parse(result.data.slice(findInitialObject, findFinalObject + 1));
+      const parseToObject = JSON.parse(
+        result.data.slice(findInitialObject, findFinalObject + 1)
+      );
 
       const newObject = {
         ...newCall,
         protocol: {
           ...newCall.protocol,
-          create_date: toLocalDateString(new Date),
+          create_date: toLocalDateString(new Date()),
         },
-        call_type: parseToObject
-      }
+        call_type: parseToObject,
+      };
 
       saveNewItem(newObject);
-      
-  } catch (error) {
-    console.error("Error sending message:", error);
-    setMessagesList("Error communicating with server");
-  }
-}
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setMessagesList([]);
+    }
+  };
 
   const sendMessageToGPT = async (newMessages) => {
     try {
@@ -127,10 +122,11 @@ export const Chatbot = ({
         }
       );
 
-
-      const findConversation = result.data.find(item => item.id === Number(protocolId));
+      const findConversation = result.data.find(
+        (item) => item.id === Number(protocolId)
+      );
       const { id, messages: responseMessages } = findConversation;
-      
+
       const resultMessage = responseMessages[responseMessages.length - 1].text;
       setMessagesList(result.data);
       setLoading(false);
@@ -140,26 +136,29 @@ export const Chatbot = ({
           resultMessage.includes("atendente")) ||
         (resultMessage.includes("transfi") &&
           resultMessage.includes("atendim")) ||
-        (resultMessage.includes("encamin") &&
-          resultMessage.includes("atenden"))
+        (resultMessage.includes("encamin") && resultMessage.includes("atenden"))
       ) {
-
         if (verifyCompanyExists) {
           const newCall = {
-              ...verifyCompanyExists,
-              protocol: {
-                id,
-                create_date: toLocalDateString(new Date),
-              },
-              client : {
-                  ...verifyCompanyExists.client,
-                  name: formValues.clientName
-              },
-              status: "Aberto",
-              priority: service.type === 'Cadastro' ? 'BAIXA' : service.type === 'Financeiro' ? 'MEDIA' : 'ALTA',
-            }
+            ...verifyCompanyExists,
+            protocol: {
+              id,
+              create_date: toLocalDateString(new Date()),
+            },
+            client: {
+              ...verifyCompanyExists.client,
+              name: formValues.clientName,
+            },
+            status: "Aberto",
+            priority:
+              service.type === "Cadastro"
+                ? "BAIXA"
+                : service.type === "Financeiro"
+                ? "MEDIA"
+                : "ALTA",
+          };
 
-            constructNewCall(newCall)
+          constructNewCall(newCall);
         }
 
         alert(
@@ -170,34 +169,39 @@ export const Chatbot = ({
     } catch (error) {
       console.error("Error sending message:", error);
     }
-  }
-
+  };
 
   const handleSubmitGPT = async (event) => {
     event.preventDefault();
 
     let newMessages = messagesList;
     setLoading(true);
-   
+
     if (message.trim()) {
-      const existsOpenProtocol = messagesList.length > 0 ? messagesList.findIndex(item => Number(item.id) === protocolId) : -1;
-     
-      if(existsOpenProtocol !== -1) {
-        newMessages[existsOpenProtocol] = { ...messagesList[existsOpenProtocol], messages: [...messagesList[existsOpenProtocol].messages, { text: message, sender: ROLE_USER }]};
+      const existsOpenProtocol =
+        messagesList.length > 0
+          ? messagesList.findIndex((item) => Number(item.id) === protocolId)
+          : -1;
+
+      if (existsOpenProtocol !== -1) {
+        newMessages[existsOpenProtocol] = {
+          ...messagesList[existsOpenProtocol],
+          messages: [
+            ...messagesList[existsOpenProtocol].messages,
+            { text: message, sender: ROLE_USER },
+          ],
+        };
       } else {
-        newMessages = [...messagesList, {id: protocolId, messages: [{ text: message, sender: ROLE_USER }]}];
+        newMessages = [
+          ...messagesList,
+          { id: protocolId, messages: [{ text: message, sender: ROLE_USER }] },
+        ];
       }
     }
 
-    
     setMessagesList(newMessages);
-      setMessage("");
-
-      // if(hasRedirectedToOperator) {
-      //   sendMessageToOperator(newMessages);
-      //   return;
-      // }
-      sendMessageToGPT(newMessages);
+    setMessage("");
+    sendMessageToGPT(newMessages);
   };
 
   return !openChat ? (
@@ -294,35 +298,43 @@ export const Chatbot = ({
     </div>
   ) : (
     <section className="chat-section">
-          <div className="chat-container background--white border radius-5">
-      <div className="chat-content chat-content-chatbot">
-        <div className="messages messages-chatbot padding-10-20">
-        {messagesList.length > 0 && messagesList.find(item => item.id === Number(protocolId))
-        .messages.map((msg, index) => (
-          <div key={index} 
-          className={`message ${
-            msg.sender === ROLE_SYSTEM
-              ? "background--light-gray"
-              : "background--gray-200"
-          }`}
-          >
-            {msg.text}
+      <div className="chat-container background--white border radius-5">
+        <div className="chat-content chat-content-chatbot">
+          <div className="messages messages-chatbot padding-10-20">
+            {messagesList.length > 0 &&
+              messagesList
+                .find((item) => item.id === Number(protocolId))
+                .messages.map((msg, index) => (
+                  <div
+                    key={index}
+                    className={`message ${
+                      msg.sender === ROLE_SYSTEM
+                        ? "background--light-gray"
+                        : "background--gray-200"
+                    }`}
+                  >
+                    {msg.text}
+                  </div>
+                ))}
           </div>
-        ))}
+        </div>
+        {loading && <div className="loading"></div>}
+        <div className="input-container d-flex padding-10-20 border radius-5 gap-10">
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyPress={(e) => e.key === "Enter" && handleSubmitGPT(e)}
+            placeholder="Digite uma mensagem..."
+          />
+          <button
+            className="background--purple-gradient"
+            onClick={handleSubmitGPT}
+          >
+            Enviar
+          </button>
         </div>
       </div>
-      {loading && <div className="loading"></div>}
-      <div className="input-container d-flex padding-10-20 border radius-5 gap-10">
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyPress={(e) => e.key === "Enter" && handleSubmitGPT(e)}
-          placeholder="Digite uma mensagem..."
-        />
-        <button className="background--purple-gradient" onClick={handleSubmitGPT}>Enviar</button>
-      </div>
-    </div>
     </section>
   );
-}
+};

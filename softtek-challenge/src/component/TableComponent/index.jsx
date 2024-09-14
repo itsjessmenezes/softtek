@@ -10,7 +10,7 @@ export const TableComponent = ({ list, setPage, setProtocol }) => {
   const { theme } = useCallList();
   const [isHovered, setIsHovered] = useState(false);
   const truncatedDescription = (desc) =>
-    desc.length > 30 ? desc.substring(0, 30) + "..." : desc;
+    desc.length > 50 ? desc.substring(0, 30) + "..." : desc;
 
   const handleClickProtocol = (item) => {
     if (item.status === "Encerrado") return;
@@ -77,9 +77,18 @@ export const TableComponent = ({ list, setPage, setProtocol }) => {
                     <h5>{item.status}</h5>
                   </div>
                 </td>
-                <td className="border bottom-2">
+                <td className="border bottom-2  tooltip-container"
+                                onMouseEnter={() => setIsHovered(true)} 
+                                onMouseLeave={() => setIsHovered(false)}
+                >
                   <h5>{item.call_type.title}</h5>
-                  <span>{item.call_type.description}</span>
+                  <span  className="tooltip-text">
+                    {truncatedDescription(item.call_type.description)}</span>
+                    {isHovered && (
+                    <div className="tooltip-bubble">
+                      {item.call_type.description}
+                    </div>
+                  )}
                 </td>
                 <td className="border bottom-2">
                   <div className={`${theme === 'light' ? "background--gray-50" : "background--bg-dark"} priority d-flex`}>

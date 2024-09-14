@@ -36,6 +36,7 @@ export const Home = ({ setProtocol, setPage, list, setList }) => {
       console.error("Error fetching callList:", error);
     }
   };
+
   const fetchCallList = async () => {
     try {
       const response = await axios.get('http://localhost:5000/api/call-list');
@@ -103,7 +104,6 @@ export const Home = ({ setProtocol, setPage, list, setList }) => {
   }, [theme]);
 
   useEffect(() => {
-    // if (hasNewItens) return;
     setLoading(true);
     const interval = setInterval(() => {
       // console.log(location.pathname);

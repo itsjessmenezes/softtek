@@ -32,7 +32,7 @@ export const Main = ({
       <NavBar page={page} setPage={setPage} />
       <main className="d-flex column">
         <Header />
-        <ChartCards list={theme === "ligth" ? callList : advancedCallList} />
+        <ChartCards list={theme === "light" ? callList : advancedCallList} />
         {page === 0 ? (
           <Home
             list={list}
