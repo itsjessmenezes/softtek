@@ -12,49 +12,106 @@ import arrowUp from "../../assets/images/arrow-up.svg";
 import send from "../../assets/images/send.svg";
 import robot from "../../assets/images/robot.svg";
 import brokeRobot from "../../assets/images/broke-robot.svg";
-// import axios from "axios";
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { ROLE_SYSTEM, ROLE_USER, STATUS_ORDER } from "../../utils/actions";
+import { ROLE_OPERATOR, ROLE_SYSTEM, ROLE_USER, STATUS_ORDER } from "../../utils/actions";
 import { sortedCallList } from "../../utils/functions";
 import { useCallList } from "../../context/useCallList";
 
-export const Calls = ({ protocol, setPage }) => {
-  const { callList, setCallList } = useCallList();
+export const Calls = ({ protocol, setPage, messagesList, setMessagesList }) => {
+  const { theme, callList, setCallList, advancedCallList, setAdvancedCallList } = useCallList();
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(true);
   const [loader, setLoader] = useState(false);
   const [height, setHeight] = useState(0);
-  const [operatorToClientMessages, setOperatorToClientMessages] = useState([]);
   const findProtocol = callList.find((p) => p.protocol.id === protocol);
 
-  const handleOptionClick = (status, protocolId) => {
-    const updateStatus = callList.map((item) =>
-      item.protocol.id === protocolId ? { ...item, status: status.value } : item
-    );
+  const saveNewItem = async (newCall) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/advanced-call-list`, newCall);
 
-    setCallList(sortedCallList(updateStatus));
+        setAdvancedCallList(sortedCallList([...advancedCallList, response.data]));
+    } catch (error) {
+      console.error("Error adding to call list:", error);
+    }
+  };
+  
+  const deleteItem = async (protocolId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/call-list/${protocolId}`);
+
+      setCallList(response.data);
+    } catch  (error) {
+      console.error("Error deleting call list:", error);
+    }
+  }
+
+  const handleOptionClick = (status, protocolId) => {
+    if(status === 'redirecionar') {
+      deleteItem(protocolId);
+
+      const redirectedClient = callList.find(item => item.protocol.id === protocol);
+
+      saveNewItem(redirectedClient);
+      
+    } else {
+      const updateStatus = callList.map((item) =>
+        item.protocol.id === protocolId ? { ...item, status: status.value } : item
+      );
+  
+      setCallList(sortedCallList(updateStatus));
+    }
+
     setPage(0);
   };
 
-
   const handleSendMessage = async (event) => {
     event.preventDefault();
+    const protocolId = findProtocol.protocol.id;
+    let newMessages = messagesList;
 
     if (input.trim()) {
-      setOperatorToClientMessages([...operatorToClientMessages, { text: input, sender: ROLE_USER }]);
-      setInput("");
+      const existsOpenProtocol = messagesList.length > 0 ? messagesList.findIndex(item => Number(item.id) === protocolId) : -1;
+      if(existsOpenProtocol !== -1) {
+
+        newMessages[existsOpenProtocol] = { ...messagesList[existsOpenProtocol], messages: [...messagesList[existsOpenProtocol].messages, { text: input, sender: ROLE_USER }]};
+      } else {
+        newMessages = [...messagesList, {id: protocolId, messages: [{ text: input, sender: ROLE_OPERATOR }]}];
+      }
+
+      setMessagesList(newMessages);
       setLoader(true);
+      setInput("");
 
       setTimeout(() => {
-        setOperatorToClientMessages((prevMessages) => [
-          ...prevMessages,
-          { text: "Resposta do cliente", sender: ROLE_SYSTEM },
-        ]);
+        newMessages[existsOpenProtocol] = { ...messagesList[existsOpenProtocol], messages: [...messagesList[existsOpenProtocol].messages, { text: "Resposta do cliente", sender: ROLE_SYSTEM }]};
+        setMessagesList(newMessages);
         setLoader(false);
       }, 1000);
     }
   };
+
+  const fetchMessagens = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/messages-list"
+      );
+
+      setMessagesList((prev) => [
+        ...prev,
+        ...response.data,
+      ]);
+    } catch (error) {
+      console.error("Error fetching callList:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMessagens();
+}, []);
 
 
   useEffect(() => {
@@ -99,7 +156,7 @@ export const Calls = ({ protocol, setPage }) => {
   return (
     <section className="d-flex margin top-20 gap-10">
       <section className="call-info-container d-flex flex column gap-10">
-        <section className="background--white border radius-5 ">
+        <section className={`${theme === 'light' ? 'background--white' : 'background--dark'} border radius-5`}>
           <LabelComponent
             title={`N° Chamado: ${protocolInfo.id}`}
             keyValue={
@@ -113,7 +170,7 @@ export const Calls = ({ protocol, setPage }) => {
             }
             content={
               <div className="content-button d-flex column gap-10">
-                <div className="background--gray-500 d-flex padding-10-20 border radius-5 gap-10">
+                <div className={`${theme === 'light' ? 'background--gray-500' : 'background--purple-gradient'} d-flex padding-10-20 border radius-5 gap-10`}>
                   <button
                     className="close-call--btn bg-none d-flex align-center gap-10 border b-none color--white font weight--bold pointer"
                     onClick={() => setIsOptionsOpen(!isOptionsOpen)}
@@ -126,7 +183,7 @@ export const Calls = ({ protocol, setPage }) => {
                   </button>
                 </div>
                 {isOptionsOpen && (
-                  <ul className="dropdown-menu">
+                  <ul className={`${theme === 'light' ? 'background--white' : 'background--bg-dark'} dropdown-menu`}>
                     {STATUS_ORDER.map((item) => (
                       <div key={item.id} className="d-flex column gap-10">
                         <li
@@ -139,6 +196,11 @@ export const Calls = ({ protocol, setPage }) => {
                         <div className="divisor background--gray-font-200"></div>
                       </div>
                     ))}
+                    <li
+                    onClick={() =>
+                            handleOptionClick('redirecionar', protocolInfo.id)
+                          }
+                    >Redirecionar chamado</li>
                   </ul>
                 )}
               </div>
@@ -146,7 +208,7 @@ export const Calls = ({ protocol, setPage }) => {
           />
         </section>
 
-        <section className="background--white border radius-5">
+        <section className={`${theme === 'light' ? 'background--white' : 'background--dark'} border radius-5`}>
           <LabelComponent
             title={client.company_name}
             keyValue={
@@ -178,7 +240,7 @@ export const Calls = ({ protocol, setPage }) => {
           />
         </section>
 
-        <section className="background--white border radius-5">
+        <section className={`${theme === 'light' ? 'background--white' : 'background--dark'} border radius-5`}>
           <div className="margin bottom-20">
             <LabelComponent
               title="Plano de Suporte Técnico Premium"
@@ -215,7 +277,7 @@ export const Calls = ({ protocol, setPage }) => {
           <div className="divisor background--gray-font-200 margin bottom-20"></div>
 
           <section className="interactions-history padding-10-20">
-            <h3 className="margin bottom-20 color--gray-font-900">
+            <h3 className={`${theme === 'light' ? 'color--gray-font-900' : 'color--gray-font-200'} margin bottom-20`}>
               Histórico de Interações
             </h3>
             <div className="d-flex column align-center">
@@ -224,7 +286,7 @@ export const Calls = ({ protocol, setPage }) => {
                 src={notFound}
                 alt="Nenhum resultado encontrado"
               />
-              <h4 className="color--gray-font-900">
+              <h4 className={theme === 'light' ? 'color--gray-font-900' : 'color--gray-font-700'}>
                 Nenhum resultado encontrado
               </h4>
             </div>
@@ -248,16 +310,19 @@ export const Calls = ({ protocol, setPage }) => {
         </section>
       </section>
       <div
-        className="chat-container background--white border radius-5"
+        className={`${theme === 'light' ? 'background--white' : 'background--dark'} chat-container border radius-5`}
         style={{ height: `${height}px` }}
       >
-        <div className="header background--gray-500 color--white padding-10-20 border top-radius-5">
-          <h3>{client.name}</h3>
-          <span className="header-online">online</span>
+        <div className={`${theme === 'light' ? 'background--gray-500' : 'background--purple-gradient'} header d-flex color--white padding-10-20 border top-radius-5`}>
+         <div className="flex">
+         <h3>{client.name}</h3>
+         <span className="header-online">online</span>
+         </div>
         </div>
-        <div className="chat-content">
+        <div className={`${theme === 'light' ? 'background--white' : 'background--dark'} chat-content`}>
           <div className="messages padding-10-20">
-            {operatorToClientMessages.map((msg, index) => typeof msg.text !== 'object' && (
+            {messagesList.find(item => item.id === protocolInfo.id) && messagesList
+            .find(item => item.id === protocolInfo.id).messages.map((msg, index) => typeof msg.text !== 'object' && (
               <div
                 key={index}
                 className={`message ${
@@ -270,9 +335,10 @@ export const Calls = ({ protocol, setPage }) => {
               </div>
             ))}
           </div>
-          {loader && <div className="loading"></div>}
+          {loader && <div className={`${theme === 'light' ? 'background--white' : 'background--dark'} loading`}></div>}
           <div className="input-container d-flex padding-10-20 border radius-5 gap-10">
             <input
+            className={theme === 'light' ? 'background--white' : 'background--dark color--white'}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}

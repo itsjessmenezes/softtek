@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { findCallServiceByStatus, findCallServiceFromOpenAndClose, findCallServiceFromTodayOpenAndClose } from '../../utils/custom';
 import '../../styles/global.scss';
 import './style.css';
@@ -7,8 +8,8 @@ import { STATUS, TICKETS } from '../../utils/actions';
 import star from '../../assets/images/star.svg';
 
 
-export const ChartCards = () => {
-  const { callList } = useCallList();
+export const ChartCards = ({ list }) => {
+  const { theme } = useCallList();
   const labels = ['Não encerrados', 'Encerrados'];
   const allLabels = ['Aberto', 'Em andamento', 'Em espera', 'Encerrado'];
 
@@ -16,19 +17,19 @@ const table = [
   {
     title: TICKETS,
     subtitle: "Hoje",
-    content: <PieChart data={findCallServiceFromTodayOpenAndClose(callList)} labels={labels} />
+    content: <PieChart data={findCallServiceFromTodayOpenAndClose(list)} labels={labels} />
   },
   {
     title: STATUS,
     subtitle: "Hoje",
     percent: "",
-    content: <PieChart data={findCallServiceByStatus(callList, STATUS)} labels={allLabels} />
+    content: <PieChart data={findCallServiceByStatus(list, STATUS)} labels={allLabels} />
   },
   {
     title: "CHAMADOS",
     subtitle: "28 dias",
     percent: "",
-    content: <PieChart data={findCallServiceFromOpenAndClose(callList, STATUS)} labels={labels} />
+    content: <PieChart data={findCallServiceFromOpenAndClose(list, STATUS)} labels={labels} />
   },
   {
     title: "AVALIAÇÃO",
@@ -44,7 +45,7 @@ const table = [
     return (
       <section className="chart-container d-flex wrap gap-10">
       {table.map(({ title, subtitle, content, percent }) => (
-        <section key={title} className="card-container background--white flex padding-10-20 border radius-10">
+        <section key={title} className={`${theme === 'light' ? "background--white" : "background--dark"} card-container flex padding-10-20 border radius-10`}>
           <div className="header d-flex justify-between">
             <span className='color--gray-font-700 font weight-800 size-16'>{title}</span>
             {percent && (
