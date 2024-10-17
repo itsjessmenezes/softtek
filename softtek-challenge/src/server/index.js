@@ -90,13 +90,29 @@ app.post("/api/gpt", async (req, res) => {
   }
 });
 
+app.post("/api/create-protocol", async (req, res) => {
+  const protocolId = 123023926 + callList.length;
+  // const protocolId = Math.floor(100000000 + Math.random() * 900000000).toString();
+  const toLocalDateString = (date) => {
+    const localDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+    return localDate.toISOString().split('T')[0];
+  }
+
+  return res.json({
+    protocol: {
+    id: protocolId,
+    create_date: toLocalDateString(new Date()),
+  },
+})
+});
+
 app.post("/api/client-chat/:protocolId", async (req, res) => {
   const { messages: listMessages } = req.body;
   const { protocolId } = req.params;
-
   const messages = listMessages.find(
     (item) => item.id === Number(protocolId)
   ).messages;
+
 
   try {
     const response = await axios.post(
