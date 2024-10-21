@@ -6,8 +6,10 @@ import bdClients from "../../utils/bdClients.json";
 import { useCallList } from "../../context/useCallList";
 import callList from "../../utils/callList.json";
 
+
 import "./style.css";
 import { toLocalDateString } from "../../utils/custom";
+import roboicon from "../../img/robomenu.png";
 export const Chatbot = ({ messagesList, setMessagesList }) => {
   const { setCallList } = useCallList();
   const [message, setMessage] = useState("");
@@ -206,6 +208,7 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
 
   return !openChat ? (
     <div className="container">
+      <img className = 'icon' src="../../src/img/robomenu.png" alt="Robo Menu" />
       <div className="form-container">
         <h2>Formulário de Atendimento</h2>
         <form className="form" onSubmit={handleSubmitForm}>
