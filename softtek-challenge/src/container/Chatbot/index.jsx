@@ -1,19 +1,19 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { ROLE_SYSTEM, ROLE_USER } from "../../utils/actions";
 import bdClients from "../../utils/bdClients.json";
 import { useCallList } from "../../context/useCallList";
-import callList from "../../utils/callList.json";
 
 import "./style.css";
 import { toLocalDateString } from "../../utils/custom";
+
 export const Chatbot = ({ messagesList, setMessagesList }) => {
   const { setCallList } = useCallList();
+  const [protocolId, setProtocolId] = useState({});
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [openChat, setOpenChat] = useState(false);
-  // const [hasRedirectedToOperator, setHasRedirectedToOperator] = useState(false);
   const documentTypes = ["CPF", "CNPJ", "Nome da Empresa"];
   const serviceTypes = ["Cadastro", "Financeiro", "Suporte Técnico"];
   const [formValues, setFormValues] = useState({
@@ -28,7 +28,7 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
   });
 
   const { clientName, document, service } = formValues;
-  const protocolId = 123023926 + callList.length;
+
   const verifyCompanyExists = bdClients.find(({ client }) => {
     if (document.type === "nome da empresa") {
       return client.company_name.toLowerCase() === document.value.toLowerCase();
@@ -60,6 +60,7 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
         "http://localhost:5000/api/call-list",
         newCall
       );
+
       setCallList((prev) => [...prev, response.data]);
     } catch (error) {
       console.error("Error adding to call list:", error);
@@ -108,10 +109,30 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
     }
   };
 
+  const createProtocol = async () => {
+
+    try {
+      const result = await axios.post(
+        'http://localhost:5000/api/create-protocol',
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setProtocolId(result.data);
+  } catch (error) {
+    console.error("Error creating protocol:", error);
+  }
+
+
+  }
+
   const sendMessageToGPT = async (newMessages) => {
     try {
       const result = await axios.post(
-        `http://localhost:5000/api/client-chat/${protocolId}`,
+        `http://localhost:5000/api/client-chat/${protocolId.protocol.id}`,
         {
           messages: newMessages,
         },
@@ -122,10 +143,7 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
         }
       );
 
-      const findConversation = result.data.find(
-        (item) => item.id === Number(protocolId)
-      );
-      const { id, messages: responseMessages } = findConversation;
+        const { messages: responseMessages } = result.data[0];
 
       const resultMessage = responseMessages[responseMessages.length - 1].text;
       setMessagesList(result.data);
@@ -142,8 +160,8 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
           const newCall = {
             ...verifyCompanyExists,
             protocol: {
-              id,
-              create_date: toLocalDateString(new Date()),
+              id: protocolId.protocol.id,
+              create_date: protocolId.protocol.create_date,
             },
             client: {
               ...verifyCompanyExists.client,
@@ -158,13 +176,17 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
                 : "ALTA",
           };
 
+          console.log({newCall})
+
           constructNewCall(newCall);
         }
 
         alert(
           "Seu atendimento será redirecionado a um atendente. Por favor, aguarde."
         );
-        // setHasRedirectedToOperator(true);
+
+        // setTimeout(() => window.location.reload(), 1000);
+        
       }
     } catch (error) {
       console.error("Error sending message:", error);
@@ -180,7 +202,7 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
     if (message.trim()) {
       const existsOpenProtocol =
         messagesList.length > 0
-          ? messagesList.findIndex((item) => Number(item.id) === protocolId)
+          ? messagesList.findIndex((item) => Number(item.id) === protocolId.protocol.id)
           : -1;
 
       if (existsOpenProtocol !== -1) {
@@ -194,7 +216,7 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
       } else {
         newMessages = [
           ...messagesList,
-          { id: protocolId, messages: [{ text: message, sender: ROLE_USER }] },
+          { id: protocolId.protocol.id, messages: [{ text: message, sender: ROLE_USER }] },
         ];
       }
     }
@@ -203,6 +225,11 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
     setMessage("");
     sendMessageToGPT(newMessages);
   };
+
+useEffect(() => {
+  console.log('eff')
+  createProtocol();
+}, []);
 
   return !openChat ? (
     <div className="container">
@@ -303,7 +330,7 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
           <div className="messages messages-chatbot padding-10-20">
             {messagesList.length > 0 &&
               messagesList
-                .find((item) => item.id === Number(protocolId))
+                .find((item) => item.id === protocolId.protocol.id)
                 .messages.map((msg, index) => (
                   <div
                     key={index}
