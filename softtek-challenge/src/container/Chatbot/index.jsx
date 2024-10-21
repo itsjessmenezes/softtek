@@ -5,8 +5,10 @@ import { ROLE_SYSTEM, ROLE_USER } from "../../utils/actions";
 import bdClients from "../../utils/bdClients.json";
 import { useCallList } from "../../context/useCallList";
 
+
 import "./style.css";
 import { toLocalDateString } from "../../utils/custom";
+import roboicon from "../../img/robomenu.png";
 
 export const Chatbot = ({ messagesList, setMessagesList }) => {
   const { setCallList } = useCallList();
@@ -233,6 +235,7 @@ useEffect(() => {
 
   return !openChat ? (
     <div className="container">
+      <img className = 'icon' src="../../src/img/robomenu.png" alt="Robo Menu" />
       <div className="form-container">
         <h2>Formulário de Atendimento</h2>
         <form className="form" onSubmit={handleSubmitForm}>
@@ -327,12 +330,12 @@ useEffect(() => {
     <section className="chat-section">
       <div className="chat-container background--white border radius-5">
         <div className="chat-content chat-content-chatbot">
-          <div className="messages messages-chatbot padding-10-20">
+          <div className="messages messages-chatbot">
             {messagesList.length > 0 &&
               messagesList
                 .find((item) => item.id === protocolId.protocol.id)
                 .messages.map((msg, index) => (
-                  <div
+                  <div 
                     key={index}
                     className={`message ${
                       msg.sender === ROLE_SYSTEM

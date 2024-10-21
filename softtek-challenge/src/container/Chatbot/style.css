@@ -1,115 +1,158 @@
 .container {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+  font-family: Arial, sans-serif;
+  /* background-color: #c8bbf8; */
+  background: linear-gradient(to bottom, #b490ece8, #ffffff);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
-  .chat-section {
-    display: flex;
-    height: 100vh;
-  }
+.chat-section {
+  background: linear-gradient(to bottom, #b490ece8, #ffffff);
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  padding: 80px;
+  
+
+
+}
 
 .form-container {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    width: 100%;
-  }
-  
-  h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-  }
+  background: #fff;
+  padding: 70px;
+  border-radius: 10px;
+  box-shadow: 0 22px 15px rgb(171, 131, 223);
+  max-width: 500px;
+  width: 100%;
+  height: 60%;
+  margin-right: 30%;
+}
 
-  .form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
+.icon{
+  position: absolute;
+  width: 60%;
+  height: auto; 
+  top: 20px; 
+  left: 40%; 
+  opacity: 0.5;
+  pointer-events: none;
 
-  .form-content {
-    display: flex;
-    gap: 10px;
-  }
+  
+}
 
-  .form-content > select {
-    flex: 1;
-  }
-  .form-content > input {
-    flex: 2;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
-  }
-  
-  input,
-  select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  
-  input:focus,
-  select:focus {
-    border-color: #6F6CF6;
-    box-shadow: 0 0 5px #3d3ca3;
-    outline: none;
-  }
-  
-  .submit-btn {
-    background-color: #6F6CF6;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    font-size: 16px;
-  }
-  
-  .submit-btn:hover {
-    background-color: #4846c9;
-  }
-  
-  .submit-btn:active {
-    transform: scale(0.98);
-  }
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
 
-  .form-submit {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-  }
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
 
-  .chat-content-chatbot {
-    height: 25rem;
-  }
+.form-group {
+  margin-bottom: 15px;
+}
 
-  .messages-chatbot {
-    height: 18rem;
-  }
+.form-content {
+  display: flex;
+  gap: 10px;
+}
 
-  .loading {
-    position: absolute;
-    bottom: 15%;
-    right: 7%;
-    transform: translate(-50%, -50%);
-    padding: 10px;
-    border-radius: 5px;
-  }
+.form-content > select {
+  flex: 1;
+}
+.form-content > input {
+  flex: 2;
+}
+
+label {
+  font-size: 19px;
+  display:block;
+  margin-bottom: 8px;
+  color: #000000;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus,
+select:focus {
+  border-color: #6F6CF6;
+  box-shadow: 0 0 5px #3d3ca3;
+  outline: none;
+}
+
+.submit-btn {
+  background-color: #6F6CF6;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  font-size: 16px;
+}
+
+.submit-btn:hover {
+  background-color: #4846c9;
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+.form-submit {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chat-container {
+  width: 40%;
+  height: 70vh;
+  padding: 80px;
+  border-radius: 10px;
+
+}
+
+.chat-content-chatbot {
+  height: 35rem;
+  width: 100%;
+
+}
+
+.messages-chatbot {
+  padding: 10px;
+  width: 110%;
+  height: 100%;
+}
+
+
+.loading {
+  position: absolute;
+  bottom: 15%;
+  right: 7%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+
+.input-container{
+  right: 1%;
+
+
+}
