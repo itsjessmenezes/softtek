@@ -330,12 +330,12 @@ useEffect(() => {
     <section className="chat-section">
       <div className="chat-container background--white border radius-5">
         <div className="chat-content chat-content-chatbot">
-          <div className="messages messages-chatbot padding-10-20">
+          <div className="messages messages-chatbot">
             {messagesList.length > 0 &&
               messagesList
                 .find((item) => item.id === protocolId.protocol.id)
                 .messages.map((msg, index) => (
-                  <div
+                  <div 
                     key={index}
                     className={`message ${
                       msg.sender === ROLE_SYSTEM

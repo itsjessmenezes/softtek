@@ -121,7 +121,7 @@ select:focus {
 }
 
 .chat-container {
-  width: 50%;
+  width: 40%;
   height: 70vh;
   padding: 80px;
   border-radius: 10px;
@@ -135,10 +135,11 @@ select:focus {
 }
 
 .messages-chatbot {
-  padding: 0px;
+  padding: 10px;
   width: 110%;
   height: 18rem;
 }
+
 
 .loading {
   position: absolute;
