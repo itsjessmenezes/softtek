@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 import { createContext, useState, useContext } from "react";
 import { sortedCallList } from "../utils/functions";
+import list from "../utils/callList.json";
 const CallListContext = createContext();
 
 export const useCallList = () => useContext(CallListContext);
 
 export const CallListProvider = ({ children }) => {
-  const [callList, setCallList] = useState([]);
+  const [callList, setCallList] = useState(list);
   const [advancedCallList, setAdvancedCallList] = useState([]);
   const [redirectCall, setRedirectCall] = useState({});
   const [theme, setTheme] = useState("");
