@@ -27,6 +27,8 @@ export const Calls = ({ protocol, setPage, messagesList, setMessagesList }) => {
   const [height, setHeight] = useState(0);
   const findProtocol = callList.find((p) => p.protocol.id === protocol);
 
+console.log({messagesList})
+
   const saveNewItem = async (newCall) => {
     try {
       const response = await axios.post(

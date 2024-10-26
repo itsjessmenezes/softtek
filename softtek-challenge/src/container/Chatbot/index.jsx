@@ -8,7 +8,6 @@ import { useCallList } from "../../context/useCallList";
 
 import "./style.css";
 import { toLocalDateString } from "../../utils/custom";
-import roboicon from "../../img/robomenu.png";
 
 export const Chatbot = ({ messagesList, setMessagesList }) => {
   const { setCallList } = useCallList();
@@ -99,7 +98,7 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
         ...newCall,
         protocol: {
           ...newCall.protocol,
-          create_date: toLocalDateString(new Date()),
+          create_date: toLocalDateString(new Date()).toISOString(),
         },
         call_type: parseToObject,
       };
@@ -127,8 +126,6 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
   } catch (error) {
     console.error("Error creating protocol:", error);
   }
-
-
   }
 
   const sendMessageToGPT = async (newMessages) => {
@@ -163,7 +160,7 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
             ...verifyCompanyExists,
             protocol: {
               id: protocolId.protocol.id,
-              create_date: protocolId.protocol.create_date,
+              create_date: protocolId.protocol.create_date.slice(0, protocolId.protocol.create_date.lastIndexOf(':')),
             },
             client: {
               ...verifyCompanyExists.client,
@@ -177,8 +174,6 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
                 ? "MEDIA"
                 : "ALTA",
           };
-
-          console.log({newCall})
 
           constructNewCall(newCall);
         }
@@ -229,7 +224,6 @@ export const Chatbot = ({ messagesList, setMessagesList }) => {
   };
 
 useEffect(() => {
-  console.log('eff')
   createProtocol();
 }, []);
 

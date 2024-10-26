@@ -65,7 +65,7 @@ export const Home = ({ setProtocol, setPage, list, setList }) => {
         ...newCall,
         protocol: {
           ...newCall.protocol,
-          create_date: toLocalDateString(new Date()),
+          create_date: toLocalDateString(new Date()).toISOString(),
         },
       };
       const response = await axios.post(
@@ -86,7 +86,7 @@ export const Home = ({ setProtocol, setPage, list, setList }) => {
         ...call,
         protocol: {
           ...call.protocol,
-          create_date: toLocalDateString(new Date),
+          create_date: toLocalDateString(new Date()).toISOString(),
         }
       }
 
@@ -96,6 +96,7 @@ export const Home = ({ setProtocol, setPage, list, setList }) => {
     setLoading(false);
     setHasNewItens(false);
   };
+
 
   useEffect(() => {
     if(!theme) return;

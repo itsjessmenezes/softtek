@@ -2,12 +2,12 @@ import { ABERTO, EM_ANDAMENTO, EM_ESPERA, ENCERRADO } from "./actions";
 
 export const toLocalDateString = (date) => {
   const localDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
-  return localDate.toISOString().split('T')[0];
+  return localDate;
 }
 
 const isDateToday = (date) => {
   const providedDate = date.split('T')[0];
-  const today = toLocalDateString(new Date());
+  const today = toLocalDateString(new Date()).toISOString().split('T')[0];
 
   return providedDate === today;
 };

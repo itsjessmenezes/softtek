@@ -60,14 +60,13 @@ export const TableComponent = ({ list, setPage, setProtocol }) => {
                   <h5>
                     {new Date(item.protocol.create_date).toLocaleString(
                       "pt-BR",
-                      { year: "numeric", month: "numeric", day: "numeric" }
+                      { timeZone: "UTC", year: "numeric", month: "numeric", day: "numeric" }
                     )}
                   </h5>
-                  <span>{`${new Date(
-                    item.protocol.create_date
-                  ).getHours()}:${new Date(
-                    item.protocol.create_date
-                  ).getMinutes()}`}</span>
+                  <span>{new Date(item.protocol.create_date).toLocaleString(
+                      "pt-BR",
+                      { timeZone: "UTC", hour: "numeric", minute: "numeric" }
+                    )}</span>
                 </td>
                 <td className="border bottom-2">
                   <div className="status-container">
